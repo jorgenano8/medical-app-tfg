@@ -1,0 +1,7 @@
+{
+  "name": "medical-app-tfg",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
