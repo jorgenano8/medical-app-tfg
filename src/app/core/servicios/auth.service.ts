@@ -4,9 +4,10 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthService {
 
-  user$ = this.afAuth.authState;
+  user$ = this.afAuth.user;
 
   constructor(private afAuth: AngularFireAuth) { }
 
