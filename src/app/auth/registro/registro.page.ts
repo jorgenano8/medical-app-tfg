@@ -55,7 +55,7 @@ export class RegistroPage implements OnInit {
         tipo: 'normal'
       };
 
-      this.usuarioService.crearUsuario(uid, infoUsuario);
+      this.usuarioService.createUsuario(uid, infoUsuario);
 
     }).then(()=>{
       this.router.navigateByUrl('/login');
