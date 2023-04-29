@@ -18,21 +18,20 @@ export class UsuarioService {
     return this.usuarioCollection;
   }
 
-  createCollection(usuario: Usuario){
-    console.log(usuario);
-    return this.usuarioCollection.add({...usuario});
+  createCollection(uid: any, infoUsuario: Usuario){
+    return this.usuarioCollection.doc(uid).set(infoUsuario);
   }
 
-  updateCollection(id: string, info: any){
-    return this.usuarioCollection.doc(id).update(info);
+  updateCollection(uid: any, info: any){
+    return this.usuarioCollection.doc(uid).update(info);
   }
 
-  delete(id: string){
-    return this.usuarioCollection.doc(id).delete();
+  delete(uid: any){
+    return this.usuarioCollection.doc(uid).delete();
   }
 
-  createUsuario(usuario: Usuario){
-    this.createCollection(usuario);
+  crearUsuario(uid: any, infoUsuario: Usuario){
+    this.createCollection(uid, infoUsuario);
   }
 
 }

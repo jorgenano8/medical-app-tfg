@@ -20,15 +20,13 @@ export class RegistroPage implements OnInit {
               private router: Router,
               private alertController: AlertController){
     this.formGroup = this.formBuilder.group({
-    email: ['', [Validators.required, Validators.email]],
-    contraseña: ['', [Validators.required]],
-    });
-
-    const alert = this.alertController.create({
-      header: 'Alert',
-      subHeader: 'Important message',
-      message: 'This is an alert!',
-      buttons: ['OK'],
+      nombre: ['', [Validators.required]],
+      apellidos: ['', [Validators.required]],
+      colegiado: ['', [Validators.required]],
+      dni: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      contraseña: ['', [Validators.required],],
+      contraseña2: ['', [Validators.required]]
     });
   }
 
@@ -36,31 +34,44 @@ export class RegistroPage implements OnInit {
   }
 
   onSubmit() {
-    if (this.formGroup.valid) {
-      const { email, contraseña } = this.formGroup.value;
 
-      this.authService.registro(email, contraseña).then(()=>
-      this.usuarioService.createUsuario(
-        {email: email,
+    //TODO: confirmar contraseñas, codificar contraseña
+    //¿es necesario guardarme la contraseña?
+
+    const { nombre, apellidos, colegiado, dni, email, contraseña } = this.formGroup.value;
+
+    this.authService.registro(email, contraseña).then((userCredential)=>{
+      const uid = userCredential.user?.uid;
+
+      const infoUsuario={
+        nombre: nombre,
+        uid: uid,
+        apellidos: apellidos,
+        colegiado: colegiado,
+        dni: dni,
+        email: email,
         contraseña: contraseña,
         fechaRegistro: new Date().toLocaleDateString(),
-        nombre: email,
         tipo: 'normal'
-        })).then(()=>
-        this.lanzarAlertaRegistro().then(()=>
-        this.router.navigate(['/login']))
-      );
-    }
+      };
+
+      this.usuarioService.crearUsuario(uid, infoUsuario);
+
+    }).then(()=>{
+      this.router.navigateByUrl('/login');
+    }).catch((error)=>{
+      console.log(error);
+    });
   }
 
-  async lanzarAlertaRegistro() {
+  async alertaRegistroCorrecto() {
     const alert = await this.alertController.create({
       header: 'Registro correcto',
       message: 'Se ha registrado correctamente. Ahora ya puede iniciar sesión con sus datos.',
       buttons: ['OK']
     });
 
-    await alert.present();
+    alert.present();
   }
 
 }
