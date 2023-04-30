@@ -22,8 +22,8 @@ export class UsuarioService {
     return this.usuarioCollection.doc(uid).get();
   }
 
-  createUsuario(uid: any, infoUsuario: Usuario){
-    return this.usuarioCollection.doc(uid).set(infoUsuario);
+  async createUsuario(uid: any, infoUsuario: Usuario){
+    return await this.usuarioCollection.doc(uid).set(infoUsuario);
   }
 
   updateUsuario(uid: any, infoUsuario: any){

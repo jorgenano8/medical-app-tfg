@@ -35,6 +35,8 @@ export class RegistroPage implements OnInit {
 
   onSubmit() {
 
+    if (!this.formGroup.valid) { return; }
+
     //TODO: confirmar contraseñas, codificar contraseña
     //¿es necesario guardarme la contraseña?
 
@@ -44,8 +46,8 @@ export class RegistroPage implements OnInit {
       const uid = userCredential.user?.uid;
 
       const infoUsuario={
-        nombre: nombre,
         uid: uid,
+        nombre: nombre,
         apellidos: apellidos,
         colegiado: colegiado,
         dni: dni,
@@ -55,19 +57,33 @@ export class RegistroPage implements OnInit {
         tipo: 'normal'
       };
 
+      console.log(userCredential.user)
+
       this.usuarioService.createUsuario(uid, infoUsuario);
+
+      this.alertaRegistroCorrecto();
 
     }).then(()=>{
       this.router.navigateByUrl('/login');
     }).catch((error)=>{
-      console.log(error);
+      this.alertaRegistroIncorrecto();
     });
   }
 
   async alertaRegistroCorrecto() {
     const alert = await this.alertController.create({
       header: 'Registro correcto',
-      message: 'Se ha registrado correctamente. Ahora ya puede iniciar sesión con sus datos.',
+      message: 'Se ha registrado correctamente. Ahora ya puede iniciar sesión con sus credenciales.',
+      buttons: ['OK']
+    });
+
+    alert.present();
+  }
+
+  async alertaRegistroIncorrecto() {
+    const alert = await this.alertController.create({
+      header: 'Registro incorrecto',
+      message: 'Parece que algo ha fallado. Revise sus credenciales y vuelva a intentarlo.',
       buttons: ['OK']
     });
 
