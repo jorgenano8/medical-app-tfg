@@ -8,13 +8,12 @@ import { User } from 'firebase/auth';
 
 export class AuthService {
 
-  private currentUser: firebase.default.User | null = null;
+  currentUser: firebase.default.User | null = null;
 
   constructor(private afAuth: AngularFireAuth) {
     this.afAuth.authState.subscribe((user) => {
       if(user){
         this.currentUser = user;
-        console.log(this.currentUser);
       }else{
         this.currentUser = null;
       }
@@ -32,5 +31,4 @@ export class AuthService {
   async logout(){
     return await this.afAuth.signOut();
   }
-
 }

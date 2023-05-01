@@ -5,5 +5,18 @@
 </ion-header>
 
 <ion-content>
+    <ion-slides pager="true" [options]="slideOpts">
+        <ion-slide>
+            <ion-label>
+                <h2>{{usuarioModel.nombre}} {{usuarioModel.apellidos}}</h2>
+                <p>Enfermera</p>
+                <p>{{usuarioModel.colegiado}}</p>
+                <p>Torrevieja, Alicante</p>
+            </ion-label>
+        </ion-slide>
+        <ion-slide>
+            <p>DESCRIPCIÓN</p>
+        </ion-slide>
+    </ion-slides>
     <ion-button expand="block" color="danger" (click)="logout()">Cerrar sesión</ion-button>
 </ion-content>
