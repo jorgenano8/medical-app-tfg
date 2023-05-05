@@ -59,7 +59,7 @@ export class RegistroPage implements OnInit {
 
       console.log(userCredential.user)
 
-      this.usuarioService.createUsuario(uid, infoUsuario);
+      this.usuarioService.newUsuario(uid, infoUsuario);
 
       this.alertaRegistroCorrecto();
 
