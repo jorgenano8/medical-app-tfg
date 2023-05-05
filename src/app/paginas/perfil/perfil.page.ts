@@ -47,6 +47,7 @@ export class PerfilPage implements OnInit {
     this.usuarioModel.colegiado = infoUsuario.colegiado;
     this.usuarioModel.dni = infoUsuario.dni;
     this.usuarioModel.fechaRegistro = infoUsuario.fechaRegistro;
+    this.usuarioModel.descripcion = infoUsuario.descripcion;
   }
 
   logout(){
