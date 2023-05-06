@@ -1,9 +1,17 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>publicacion</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title>Crear publicación</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
+
+    <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+        <ion-button type="submit" expand="block" [disabled]="!formGroup.valid">publicar</ion-button>
+        <h3>Titulo</h3>
+        <ion-input placeholder="Introduce un título" type="text" maxlength="70" formControlName="titulo"></ion-input>
+        <h3>Contenido</h3>
+        <ion-textarea label="Regular textarea" [autoGrow]="true" formControlName="contenido" placeholder="¿Que te gustaría compartir?"></ion-textarea>
+    </form>
 
 </ion-content>
