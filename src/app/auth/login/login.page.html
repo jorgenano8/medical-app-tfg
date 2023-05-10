@@ -1,21 +1,20 @@
-<ion-header>
-    <ion-toolbar>
-        <ion-title>login</ion-title>
-    </ion-toolbar>
-</ion-header>
-
 <ion-content>
-    <ion-text>
-        <h3>Inicia sesión</h3>
-        o <a [routerLink]="['/registro']">Regístrate</a>
-    </ion-text>
+    <ion-item lines="none">
+        <h3><strong>Inicia sesión</strong></h3>
+    </ion-item>
+    <ion-item lines="none">
+        <ion-label>o <a [routerLink]="['/registro']">Regístrate</a></ion-label>
+    </ion-item>
+
     <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
-        <ion-label position="floating">Correo electrónico</ion-label>
-        <ion-input placeholder="Introduce tu correo electrónico" type="email" formControlName="email"></ion-input>
-
-        <ion-label position="floating">Contraseña</ion-label>
-        <ion-input placeholder="Introduce tu contraseña" type="password" formControlName="contraseña"></ion-input>
-
+        <ion-item lines="none">
+            <ion-label position="stacked">Correo electrónico</ion-label>
+            <ion-input placeholder="Introduce tu correo electrónico" type="email" formControlName="email"></ion-input>
+        </ion-item>
+        <ion-item lines="none">
+            <ion-label position="stacked">Contraseña</ion-label>
+            <ion-input placeholder="Introduce tu contraseña" type="password" formControlName="contraseña"></ion-input>
+        </ion-item>
         <ion-button type="submit" expand="block" [disabled]="!formGroup.valid">Iniciar sesión</ion-button>
     </form>
 </ion-content>
