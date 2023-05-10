@@ -1,36 +1,40 @@
-<ion-header>
-    <ion-toolbar>
-        <ion-title>Registro</ion-title>
-    </ion-toolbar>
-</ion-header>
-
 <ion-content>
-    <ion-text>
-        <h3>Registro</h3>
-        o <a [routerLink]="['/login']">Inicia sesión</a>
-    </ion-text>
+    <ion-item lines="none">
+        <h3><strong>Regístrate</strong></h3>
+    </ion-item>
+    <ion-item lines="none">
+        <ion-label> o <a [routerLink]="['/login']">Inicia sesión</a></ion-label>
+    </ion-item>
+
     <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
-        <ion-label position="floating">Nombre</ion-label>
-        <ion-input placeholder="Introduce tu nombre" type="text" formControlName="nombre"></ion-input>
-
-        <ion-label position="floating">Apellidos</ion-label>
-        <ion-input placeholder="Introduce tus apellidos" type="text" formControlName="apellidos"></ion-input>
-
-        <ion-label position="floating">Número de colegiado</ion-label>
-        <ion-input placeholder="Introduce tu número de colegiado" type="number" formControlName="colegiado"></ion-input>
-
-        <ion-label position="floating">Documento de Identificación Nacional (DNI)</ion-label>
-        <ion-input placeholder="Introduce tu número de identificación" type="text" formControlName="dni"></ion-input>
-
-        <ion-label position="floating">Correo electrónico</ion-label>
-        <ion-input placeholder="Introduce tu correo electrónico" type="email" formControlName="email"></ion-input>
-
-        <ion-label position="floating">Contraseña</ion-label>
-        <ion-input placeholder="Introduce tu contraseña" type="password" formControlName="contraseña"></ion-input>
-
-        <ion-label position="floating">Confirmar contraseña</ion-label>
-        <ion-input placeholder="Introduce de nuevo tu contraseña" type="password" formControlName="contraseña2"></ion-input>
-
+        <ion-item lines="none">
+            <ion-label position="stacked">Nombre</ion-label>
+            <ion-input placeholder="Introduce tu nombre" type="text" formControlName="nombre"></ion-input>
+        </ion-item>
+        <ion-item lines="none">
+            <ion-label position="stacked">Apellidos</ion-label>
+            <ion-input placeholder="Introduce tus apellidos" type="text" formControlName="apellidos"></ion-input>
+        </ion-item>
+        <ion-item lines="none">
+            <ion-label position="stacked">Número de colegiado</ion-label>
+            <ion-input placeholder="Introduce tu número de colegiado" type="number" formControlName="colegiado"></ion-input>
+        </ion-item>
+        <ion-item lines="none">
+            <ion-label position="stacked">Documento de Identificación Nacional (DNI)</ion-label>
+            <ion-input placeholder="Introduce tu número de identificación" type="text" formControlName="dni"></ion-input>
+        </ion-item>
+        <ion-item lines="none">
+            <ion-label position="stacked">Correo electrónico</ion-label>
+            <ion-input placeholder="Introduce tu correo electrónico" type="email" formControlName="email"></ion-input>
+        </ion-item>
+        <ion-item lines="none">
+            <ion-label position="stacked">Contraseña</ion-label>
+            <ion-input placeholder="Introduce tu contraseña" type="password" formControlName="contraseña"></ion-input>
+        </ion-item>
+        <ion-item lines="none">
+            <ion-label position="stacked">Confirmar contraseña</ion-label>
+            <ion-input placeholder="Introduce de nuevo tu contraseña" type="password" formControlName="contraseña2"></ion-input>
+        </ion-item>
         <ion-button type="submit" expand="block" [disabled]="!formGroup.valid">Continuar</ion-button>
     </form>
 </ion-content>
