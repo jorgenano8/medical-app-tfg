@@ -32,14 +32,7 @@ export class PublicacionPage implements OnInit {
      }
 
   ngOnInit() {
-    this.afAuth.onAuthStateChanged((currentUser)=>{
-      if(!currentUser){ return; }
-      this.usuarioService.getUsuario(currentUser?.uid).subscribe((infoUsuario) => {
-        this.rellenarDatosUsuario(infoUsuario.data());
-      })
-    }).catch((error)=>{
-      console.log(error.message);
-    });
+    this.prepararDatosUsuario();
   }
 
   onSubmit(){
@@ -48,9 +41,11 @@ export class PublicacionPage implements OnInit {
     const { titulo, contenido} = this.formGroup.value;
 
     const infoPublicacion:Publicacion={
+      uid: "",
+      usuario:"",
       titulo:titulo,
       contenido:contenido,
-      fechaPublicacion: new Date(),
+      fechaPublicacion: new Date().toLocaleString(),
       etiqueta:'test',
     }
 
@@ -63,6 +58,17 @@ export class PublicacionPage implements OnInit {
     }).catch(()=>{
       this.alertaPublicaciónIncorrecto();
     })
+  }
+
+  prepararDatosUsuario(){
+    this.afAuth.onAuthStateChanged((currentUser)=>{
+      if(!currentUser){ return; }
+      this.usuarioService.getUsuario(currentUser?.uid).subscribe((infoUsuario) => {
+        this.rellenarDatosUsuario(infoUsuario.data());
+      })
+    }).catch((error)=>{
+      console.log(error.message);
+    });
   }
 
   async alertaPublicaciónIncorrecto() {
