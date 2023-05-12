@@ -26,6 +26,12 @@
         <ion-icon name="log-out-outline"></ion-icon>
     </ion-button>
 
+    <swiper-container>
+        <swiper-slide>Slide 1</swiper-slide>
+        <swiper-slide>Slide 2</swiper-slide>
+        <swiper-slide>Slide 3</swiper-slide>
+    </swiper-container>
+
     <ion-card *ngFor="let publicacion of listaPublicaciones" [routerLink]="['/home/publicacion', publicacion.uid]">
         <ion-card-header>
             <ion-card-subtitle>{{publicacion.fechaPublicacion}}</ion-card-subtitle>

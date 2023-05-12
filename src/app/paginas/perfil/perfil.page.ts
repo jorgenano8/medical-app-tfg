@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { DocumentSnapshot } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { Publicacion } from 'src/app/core/modelos/publicacion.model';
 import { Usuario } from 'src/app/core/modelos/usuario.model';
 import { AuthService } from 'src/app/core/servicios/auth.service';
 import { PublicacionService } from 'src/app/core/servicios/publicacion.service';
 import { UsuarioService } from 'src/app/core/servicios/usuario.service';
+import { register } from 'swiper/element/bundle';
+register();
 
 @Component({
   selector: 'app-perfil',
