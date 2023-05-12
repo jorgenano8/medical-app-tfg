@@ -21,7 +21,20 @@
             <p>{{usuarioModel.descripcion}}</p>
         </ion-slide>
     </ion-slides>
+
     <ion-button expand="block" color="danger" (click)="logout()">
         <ion-icon name="log-out-outline"></ion-icon>
     </ion-button>
+
+    <ion-card *ngFor="let publicacion of listaPublicaciones" [routerLink]="['/home/publicacion', publicacion.uid]">
+        <ion-card-header>
+            <ion-card-subtitle>{{publicacion.fechaPublicacion}}</ion-card-subtitle>
+            <ion-card-title>{{publicacion.titulo}}</ion-card-title>
+            <ion-card-subtitle>{{publicacion.etiqueta}}</ion-card-subtitle>
+        </ion-card-header>
+
+        <ion-card-content>
+            {{publicacion.contenido}}
+        </ion-card-content>
+    </ion-card>
 </ion-content>
