@@ -14,11 +14,14 @@ export class InicioPage implements OnInit {
   constructor(private publicacionService: PublicacionService) { }
 
   ngOnInit() {
+    this.cargarPublicaciones();
+  }
+
+  cargarPublicaciones(){
     this.publicacionService.getPublicaciones().valueChanges().subscribe((publicaciones)=>{
       this.listaPublicaciones=publicaciones.map((publicacion)=>{
         return new Publicacion(publicacion.uid, publicacion.usuario, publicacion.fechaPublicacion, publicacion.etiqueta, publicacion.titulo, publicacion.contenido);
       });
-      console.log(this.listaPublicaciones);
       this.ordenarPublicaciones();
     });
   }
