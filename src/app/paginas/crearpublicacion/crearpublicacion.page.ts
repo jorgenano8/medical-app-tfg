@@ -32,6 +32,10 @@ export class CrearPublicacionPage implements OnInit {
      }
 
   ngOnInit() {
+  }
+
+  ionViewWillEnter(){
+    console.log("ionViewWillEnter")
     this.prepararDatosUsuario();
   }
 

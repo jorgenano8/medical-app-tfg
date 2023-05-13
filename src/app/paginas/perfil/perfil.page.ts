@@ -32,6 +32,10 @@ export class PerfilPage implements OnInit {
     private router: Router,) { }
 
   ngOnInit() {
+  }
+
+  ionViewWillEnter(){
+    console.log("ionViewWillEnter")
     this.cargarDatosUsuario();
   }
 
@@ -48,6 +52,7 @@ export class PerfilPage implements OnInit {
   }
 
   cargarPublicacionesUsuario(idUsuario: any){
+    this.listaPublicaciones=[];
     this.publicacionService.getPublicaciones().ref.where('usuario', '==', idUsuario).orderBy('fechaPublicacion', 'desc').get().then((resultado)=>{
       resultado.forEach(publicacion =>{
         this.listaPublicaciones.push({

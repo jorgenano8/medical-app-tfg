@@ -12,4 +12,8 @@ export class NotificacionesPage implements OnInit {
   ngOnInit() {
   }
 
+  ionViewWillEnter(){
+    console.log("ionViewWillEnter")
+  }
+
 }

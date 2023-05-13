@@ -11,5 +11,8 @@ export class MensajesPage implements OnInit {
 
   ngOnInit() {
   }
+  ionViewWillEnter(){
+    console.log("ionViewWillEnter")
+  }
 
 }

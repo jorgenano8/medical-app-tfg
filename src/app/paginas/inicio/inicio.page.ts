@@ -14,10 +14,15 @@ export class InicioPage implements OnInit {
   constructor(private publicacionService: PublicacionService) { }
 
   ngOnInit() {
-    this.cargarPublicaciones();
+  }
+
+  ionViewWillEnter(){
+    console.log("ionViewWillEnter")
+    //this.cargarPublicaciones();
   }
 
   cargarPublicaciones(){
+    this.listaPublicaciones=[];
     this.publicacionService.getPublicaciones().valueChanges().subscribe((publicaciones)=>{
       this.listaPublicaciones=publicaciones.map((publicacion)=>{
         return new Publicacion(publicacion.uid, publicacion.usuario, publicacion.fechaPublicacion, publicacion.etiqueta, publicacion.titulo, publicacion.contenido);
