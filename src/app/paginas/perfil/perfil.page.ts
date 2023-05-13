@@ -53,18 +53,22 @@ export class PerfilPage implements OnInit {
 
   cargarPublicacionesUsuario(idUsuario: any){
     this.listaPublicaciones=[];
-    this.publicacionService.getPublicaciones().ref.where('usuario', '==', idUsuario).orderBy('fechaPublicacion', 'desc').get().then((resultado)=>{
-      resultado.forEach(publicacion =>{
-        this.listaPublicaciones.push({
-          uid:publicacion.data().uid,
-          usuario:publicacion.data().usuario,
-          fechaPublicacion: publicacion.data().fechaPublicacion,
-          etiqueta: publicacion.data().etiqueta,
-          titulo: publicacion.data().titulo,
-          contenido: publicacion.data().contenido
-        });
+    this.publicacionService.getPublicaciones().ref.where('usuario', '==', idUsuario).orderBy('fechaPublicacion', 'desc').get().then((resPublicacion)=>{
+      resPublicacion.forEach(infoPublicacion =>{
+        this.rellenarDatosPublicacion(infoPublicacion);
       })
     })
+  }
+
+  rellenarDatosPublicacion(infoPublicacion: any){
+    this.listaPublicaciones.push({
+      uid:infoPublicacion.data().uid,
+      usuario:infoPublicacion.data().usuario,
+      fechaPublicacion: infoPublicacion.data().fechaPublicacion,
+      etiqueta: infoPublicacion.data().etiqueta,
+      titulo: infoPublicacion.data().titulo,
+      contenido: infoPublicacion.data().contenido
+    });
   }
 
   rellenarDatosUsuario(infoUsuario: any){
