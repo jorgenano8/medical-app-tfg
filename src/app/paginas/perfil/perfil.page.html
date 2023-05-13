@@ -5,32 +5,24 @@
 </ion-header>
 
 <ion-content>
-    <ion-slides pager="true" [options]="slideOpts">
-        <ion-slide>
+    <swiper-container [pagination]="true">
+        <swiper-slide>
             <ion-avatar>
                 <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
             </ion-avatar>
-            <ion-label>
-                <ion-title>{{usuarioModel.nombre}} {{usuarioModel.apellidos}}</ion-title>
-                <ion-label>Enfermera</ion-label>
-                <ion-label>{{usuarioModel.colegiado}}</ion-label>
-                <ion-label>Torrevieja, Alicante</ion-label>
-            </ion-label>
-        </ion-slide>
-        <ion-slide>
-            <p>{{usuarioModel.descripcion}}</p>
-        </ion-slide>
-    </ion-slides>
+            <h3>{{usuarioModel.nombre}} {{usuarioModel.apellidos}}</h3>
+            <ion-note>Enfermera</ion-note>
+            <ion-note>{{usuarioModel.colegiado}}</ion-note>
+            <ion-note>Torrevieja, Alicante</ion-note>
+        </swiper-slide>
+        <swiper-slide>
+            <p class="ion-text-center">{{usuarioModel.descripcion}}</p>
+        </swiper-slide>
+    </swiper-container>
 
     <ion-button expand="block" color="danger" (click)="logout()">
         <ion-icon name="log-out-outline"></ion-icon>
     </ion-button>
-
-    <swiper-container>
-        <swiper-slide>Slide 1</swiper-slide>
-        <swiper-slide>Slide 2</swiper-slide>
-        <swiper-slide>Slide 3</swiper-slide>
-    </swiper-container>
 
     <ion-card *ngFor="let publicacion of listaPublicaciones" [routerLink]="['/home/publicacion', publicacion.uid]">
         <ion-card-header>
