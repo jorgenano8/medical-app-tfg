@@ -23,14 +23,7 @@ const routes: Routes = [
     path: 'registro',
     canActivate: [Noauthguard],
     loadChildren: () => import('./auth/registro/registro.module').then( m => m.RegistroPageModule)
-  },
-  {
-    path: 'publicacion',
-    loadChildren: () => import('./paginas/publicacion/publicacion.module').then( m => m.PublicacionPageModule)
   }
-
-
-
 ];
 @NgModule({
   imports: [
