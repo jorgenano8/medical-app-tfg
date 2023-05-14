@@ -33,7 +33,7 @@ export class LoginPage implements OnInit {
     const { email, contraseña } = this.formGroup.value;
 
     this.authService.login(email, contraseña).then(() => {
-      this.router.navigate(['/home']);
+      this.router.navigateByUrl('/home');
     }).catch((error)=>{
       this.alertaInicioSesionIncorrecto();
     });
