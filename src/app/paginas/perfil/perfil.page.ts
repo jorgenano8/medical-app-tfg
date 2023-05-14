@@ -19,11 +19,6 @@ export class PerfilPage implements OnInit {
   public usuarioModel: Usuario = {};
   public listaPublicaciones: Publicacion[]=[];
 
-  slideOpts = {
-    initialSlide: 1,
-    speed: 400,
-  };
-
   constructor(
     private usuarioService: UsuarioService,
     private publicacionService: PublicacionService,

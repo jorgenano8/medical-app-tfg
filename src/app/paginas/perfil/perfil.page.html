@@ -12,12 +12,12 @@
             </ion-avatar>
             <ion-label>
                 <h2>{{usuarioModel.nombre}} {{usuarioModel.apellidos}}</h2>
-                <p>Enfermera</p>
+                <p>PROFESION</p>
                 <p>{{usuarioModel.colegiado}}</p>
                 <p>Torrevieja, Alicante</p>
             </ion-label>
         </swiper-slide>
-        <swiper-slide>
+        <swiper-slide *ngIf="usuarioModel.descripcion">
             <p class="ion-text-center descripcion">{{usuarioModel.descripcion}}</p>
         </swiper-slide>
     </swiper-container>
