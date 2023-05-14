@@ -1,0 +1,39 @@
+swiper-container {
+    margin-top: 10%;
+    width: 100%;
+    height: 25%;
+}
+
+swiper-slide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+ion-avatar {
+    margin-bottom: 3%;
+}
+
+h2 {
+    font-weight: 700;
+}
+
+ion-label {
+    margin-bottom: 5%;
+    text-align: center;
+}
+
+.descripcion {
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+ion-card-title {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+ion-card-content {
+    font-size: 14px;
+}

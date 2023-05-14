@@ -35,6 +35,11 @@ const routes: Routes = [
         loadChildren: () => import('../paginas/perfil/perfil.module').then( m => m.PerfilPageModule)
       },
       {
+        path: 'usuario/:uid',
+        canActivate: [AuthGuard],
+        loadChildren: () => import('../paginas/usuario/usuario.module').then( m => m.UsuarioPageModule)
+      },
+      {
         path: 'mensajes',
         canActivate: [AuthGuard],
         loadChildren: () => import('../paginas/mensajes/mensajes.module').then( m => m.MensajesPageModule)

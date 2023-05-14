@@ -1,0 +1,40 @@
+<!-- <ion-header>
+    <ion-toolbar>
+        <ion-title>Perfil</ion-title>
+    </ion-toolbar>
+</ion-header> -->
+
+<ion-content>
+    <swiper-container [pagination]="true" *ngIf="loaded">
+        <swiper-slide>
+            <ion-avatar>
+                <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+            </ion-avatar>
+            <ion-label>
+                <h2>{{usuarioModel.nombre}} {{usuarioModel.apellidos}}</h2>
+                <p>PROFESION</p>
+                <p>{{usuarioModel.colegiado}}</p>
+                <p>Torrevieja, Alicante</p>
+            </ion-label>
+        </swiper-slide>
+        <swiper-slide *ngIf="usuarioModel.descripcion">
+            <p class="ion-text-center descripcion">{{usuarioModel.descripcion}}</p>
+        </swiper-slide>
+    </swiper-container>
+
+    <!-- <ion-button expand="block" color="danger" (click)="logout()">
+        <ion-icon name="log-out-outline"></ion-icon>
+    </ion-button> -->
+
+    <ion-card *ngFor="let publicacion of listaPublicaciones" [routerLink]="['/home/publicacion', publicacion.uid]">
+        <ion-card-header>
+            <ion-card-subtitle>{{publicacion.fechaPublicacion}}</ion-card-subtitle>
+            <ion-card-title>{{publicacion.titulo}}</ion-card-title>
+            <ion-card-subtitle>{{publicacion.etiqueta}}</ion-card-subtitle>
+        </ion-card-header>
+
+        <ion-card-content>
+            {{publicacion.contenido}}
+        </ion-card-content>
+    </ion-card>
+</ion-content>
