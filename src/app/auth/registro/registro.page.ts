@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/servicios/auth.service';
 import { UsuarioService } from 'src/app/core/servicios/usuario.service';
 import { AlertController } from '@ionic/angular';
+import { Usuario } from 'src/app/core/modelos/usuario.model';
 
 @Component({
   selector: 'app-registro',
@@ -35,34 +36,30 @@ export class RegistroPage implements OnInit {
 
   onSubmit() {
 
+    const infoUsuario : Usuario = {};
+
     if (!this.formGroup.valid) { return; }
 
-    //TODO: confirmar contraseñas, codificar contraseña
-    //¿es necesario guardarme la contraseña?
-
     const { nombre, apellidos, colegiado, dni, email, contraseña } = this.formGroup.value;
+
+    infoUsuario.nombre = nombre;
+    infoUsuario.apellidos = apellidos;
+    infoUsuario.colegiado = colegiado;
+    infoUsuario.dni = dni;
+    infoUsuario.email = email;
+    infoUsuario.fechaRegistro = new Date().toLocaleString();
+    infoUsuario.email = email;
 
     this.authService.registro(email, contraseña).then((userCredential)=>{
       const uid = userCredential.user?.uid;
 
-      const infoUsuario={
-        uid: uid,
-        nombre: nombre,
-        apellidos: apellidos,
-        colegiado: colegiado,
-        dni: dni,
-        email: email,
-        contraseña: contraseña,
-        fechaRegistro: new Date().toLocaleDateString(),
-        tipo: 'normal'
-      };
-
-      this.usuarioService.newUsuario(uid, infoUsuario);
-
-      this.alertaRegistroCorrecto();
-
-    }).then(()=>{
-      this.router.navigateByUrl('/login');
+      this.usuarioService.newUsuario(uid, infoUsuario).then(()=>{
+        this.authService.logout().then(()=>{
+          this.router.navigateByUrl('/login').then(()=>{
+            this.alertaRegistroCorrecto();
+        })
+      })
+    })
     }).catch((error)=>{
       this.alertaRegistroIncorrecto();
     });
