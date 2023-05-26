@@ -35,8 +35,11 @@ export class CrearPublicacionPage implements OnInit {
   }
 
   ionViewWillEnter(){
-    console.log("ionViewWillEnter")
     this.prepararDatosUsuario();
+  }
+
+  ionViewWillLeave(){
+    this.formGroup.reset();
   }
 
   onSubmit(){
@@ -58,7 +61,7 @@ export class CrearPublicacionPage implements OnInit {
       infoPublicacion.usuario=this.usuarioModel.uid;
       docRef.set(infoPublicacion);
     }).then(()=>{
-      this.router.navigateByUrl('/home/inicio');
+      this.router.navigateByUrl('/home/publicacion/'+ infoPublicacion.uid);
     }).catch(()=>{
       this.alertaPublicaciónIncorrecto();
     })
@@ -90,4 +93,5 @@ export class CrearPublicacionPage implements OnInit {
     this.usuarioModel.apellidos = infoUsuario.apellidos;
     this.usuarioModel.uid = infoUsuario.uid;
   }
+
 }
