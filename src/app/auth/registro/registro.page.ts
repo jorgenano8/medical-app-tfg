@@ -28,38 +28,46 @@ export class RegistroPage implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       contraseña: ['', [Validators.required],],
       contraseña2: ['', [Validators.required]]
-    });
-  }
+    }, {validator: this.compararContraseñas}
+  )};
 
   ngOnInit() {
   }
 
-  onSubmit() {
+  compararContraseñas(formGroup: FormGroup) {
+    if (formGroup.get('contraseña')?.value === formGroup.get('contraseña2')?.value) {
+      formGroup.get('contraseña2')?.setErrors(null);
+    } else {
+      formGroup.get('contraseña2')?.setErrors({ 'diferentes': true });
+    }
+  }
 
-    const infoUsuario : Usuario = {};
+  onSubmit() {
 
     if (!this.formGroup.valid) { return; }
 
     const { nombre, apellidos, colegiado, dni, email, contraseña } = this.formGroup.value;
 
-    infoUsuario.nombre = nombre;
-    infoUsuario.apellidos = apellidos;
-    infoUsuario.colegiado = colegiado;
-    infoUsuario.dni = dni;
-    infoUsuario.email = email;
-    infoUsuario.fechaRegistro = new Date().toLocaleString();
-    infoUsuario.email = email;
-
     this.authService.registro(email, contraseña).then((userCredential)=>{
       const uid = userCredential.user?.uid;
+      const infoUsuario : Usuario = {
+        uid : uid,
+        nombre : nombre,
+        apellidos : apellidos,
+        colegiado : colegiado,
+        dni : dni,
+        email : email,
+        fechaRegistro : new Date().toLocaleString(),
+        tipo : "normal"
+      };
 
       this.usuarioService.newUsuario(uid, infoUsuario).then(()=>{
         this.authService.logout().then(()=>{
           this.router.navigateByUrl('/login').then(()=>{
             this.alertaRegistroCorrecto();
+          })
         })
       })
-    })
     }).catch((error)=>{
       this.alertaRegistroIncorrecto();
     });
@@ -77,8 +85,8 @@ export class RegistroPage implements OnInit {
 
   async alertaRegistroIncorrecto() {
     const alert = await this.alertController.create({
-      header: 'Registro incorrecto',
-      message: 'Parece que algo ha fallado. Revise sus credenciales y vuelva a intentarlo.',
+      header: '¡Ups!',
+      message: 'Parece que algo ha fallado. Vuelva a intentarlo más tarde.',
       buttons: ['OK']
     });
 
