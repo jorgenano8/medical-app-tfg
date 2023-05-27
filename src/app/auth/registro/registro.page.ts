@@ -13,7 +13,8 @@ import { Usuario } from 'src/app/core/modelos/usuario.model';
 })
 export class RegistroPage implements OnInit {
 
-  formGroup: FormGroup;
+  public formGroup: FormGroup;
+  public loading: Boolean = false;
 
   constructor(private authService: AuthService,
               private formBuilder: FormBuilder,
@@ -44,7 +45,12 @@ export class RegistroPage implements OnInit {
 
   onSubmit() {
 
-    if (!this.formGroup.valid) { return; }
+    if (!this.formGroup.valid) {
+      this.loading = false;
+      return;
+    }
+
+    this.loading = true;
 
     const { nombre, apellidos, colegiado, dni, email, contraseña } = this.formGroup.value;
 
@@ -63,12 +69,14 @@ export class RegistroPage implements OnInit {
 
       this.usuarioService.newUsuario(uid, infoUsuario).then(()=>{
         this.authService.logout().then(()=>{
+          this.loading = false;
           this.router.navigateByUrl('/login').then(()=>{
             this.alertaRegistroCorrecto();
           })
         })
       })
     }).catch((error)=>{
+      this.loading = false;
       this.alertaRegistroIncorrecto();
     });
   }

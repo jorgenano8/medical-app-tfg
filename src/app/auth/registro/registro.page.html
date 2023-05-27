@@ -38,7 +38,10 @@
             </ion-item>
         </ion-list>
 
-        <ion-button type="submit" expand="block" [disabled]="!formGroup.valid">Continuar</ion-button>
+        <ion-button type="submit" expand="block" fill="outline" [disabled]="!formGroup.valid || loading">
+            <ion-spinner *ngIf="loading"></ion-spinner>
+            <span *ngIf="!loading">Continuar</span>
+        </ion-button>
 
     </form>
 </ion-content>
