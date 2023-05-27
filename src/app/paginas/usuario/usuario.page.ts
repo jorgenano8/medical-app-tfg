@@ -29,15 +29,15 @@ export class UsuarioPage implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.comprobarUsuario(this.route.snapshot.params['uid']);
   }
 
   ionViewWillEnter(){
+    this.loaded=false;
+    this.miPerfil=false;
+    this.comprobarUsuario(this.route.snapshot.params['uid']);
   }
 
   comprobarUsuario(uidUsuarioPagina:String){
-    this.loaded=false;
-    this.miPerfil=false;
     this.afAuth.onAuthStateChanged((currentUser)=>{
       if(!currentUser){ return; }
       if(uidUsuarioPagina===currentUser.uid){
