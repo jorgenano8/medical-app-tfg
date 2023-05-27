@@ -53,6 +53,7 @@ export class PublicacionPage implements OnInit {
   }
 
   rellenarDatosUsuario(infoUsuario: any){
+    this.usuarioModel.uid = infoUsuario.uid;
     this.usuarioModel.nombre = infoUsuario.nombre;
     this.usuarioModel.apellidos = infoUsuario.apellidos;
     this.loaded=true;
