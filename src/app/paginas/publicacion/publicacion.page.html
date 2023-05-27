@@ -18,7 +18,7 @@
             <h3><strong>{{publicacionModel.titulo}}</strong></h3>
         </ion-item>
         <ion-item lines="none">
-            <p>{{publicacionModel.contenido}}</p>
+            <p [innerHTML]="publicacionModel.contenido"></p>
         </ion-item>
 
         <ion-item lines="none">

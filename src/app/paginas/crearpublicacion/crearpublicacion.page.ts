@@ -54,7 +54,7 @@ export class CrearPublicacionPage implements OnInit {
       uid: "",
       usuario:"",
       titulo:titulo,
-      contenido:contenido,
+      contenido:contenido.replace(/\n/g, '<br>'),
       fechaPublicacion: new Date().toLocaleString(),
       etiqueta:'test',
     }
