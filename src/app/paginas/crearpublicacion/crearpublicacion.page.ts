@@ -15,8 +15,9 @@ import { UsuarioService } from 'src/app/core/servicios/usuario.service';
 })
 export class CrearPublicacionPage implements OnInit {
 
-  formGroup: FormGroup;
+  public formGroup: FormGroup;
   public usuarioModel: Usuario = {};
+  public loading: Boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -45,6 +46,8 @@ export class CrearPublicacionPage implements OnInit {
   onSubmit(){
     if (!this.formGroup.valid) { return; }
 
+    this.loading = true;
+
     const { titulo, contenido} = this.formGroup.value;
 
     const infoPublicacion:Publicacion={
@@ -61,8 +64,10 @@ export class CrearPublicacionPage implements OnInit {
       infoPublicacion.usuario=this.usuarioModel.uid;
       docRef.set(infoPublicacion);
     }).then(()=>{
+      this.loading = false;
       this.router.navigateByUrl('/home/publicacion/'+ infoPublicacion.uid);
     }).catch(()=>{
+      this.loading = false;
       this.alertaPublicaciónIncorrecto();
     })
   }
