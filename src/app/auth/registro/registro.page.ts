@@ -45,10 +45,7 @@ export class RegistroPage implements OnInit {
 
   onSubmit() {
 
-    if (!this.formGroup.valid) {
-      this.loading = false;
-      return;
-    }
+    if (!this.formGroup.valid) { return; }
 
     this.loading = true;
 
@@ -69,8 +66,8 @@ export class RegistroPage implements OnInit {
 
       this.usuarioService.newUsuario(uid, infoUsuario).then(()=>{
         this.authService.logout().then(()=>{
-          this.loading = false;
           this.router.navigateByUrl('/login').then(()=>{
+            this.loading = false;
             this.alertaRegistroCorrecto();
           })
         })
