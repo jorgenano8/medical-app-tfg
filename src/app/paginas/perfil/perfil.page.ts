@@ -18,6 +18,7 @@ export class PerfilPage implements OnInit {
 
   public usuarioModel: Usuario = {};
   public listaPublicaciones: Publicacion[]=[];
+  public loaded :  Boolean = false;
 
   constructor(
     private usuarioService: UsuarioService,
@@ -52,6 +53,7 @@ export class PerfilPage implements OnInit {
       resPublicacion.forEach(infoPublicacion =>{
         this.rellenarDatosPublicacion(infoPublicacion);
       })
+      this.loaded = true;
     })
   }
 

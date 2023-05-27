@@ -5,7 +5,7 @@
 </ion-header> -->
 
 <ion-content>
-    <swiper-container [pagination]="true">
+    <swiper-container [pagination]="true" *ngIf="loaded">
         <swiper-slide>
             <ion-avatar>
                 <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
@@ -22,19 +22,41 @@
         </swiper-slide>
     </swiper-container>
 
-    <ion-button expand="block" color="danger" (click)="logout()">
+    <ion-button *ngIf="loaded" expand="block" color="danger" (click)="logout()">
         <ion-icon name="log-out-outline"></ion-icon>
     </ion-button>
 
-    <ion-card *ngFor="let publicacion of listaPublicaciones" [routerLink]="['/home/publicacion', publicacion.uid]">
-        <ion-card-header>
-            <ion-card-subtitle>{{publicacion.fechaPublicacion}}</ion-card-subtitle>
-            <ion-card-title>{{publicacion.titulo}}</ion-card-title>
-            <ion-card-subtitle>{{publicacion.etiqueta}}</ion-card-subtitle>
-        </ion-card-header>
+    <ng-container *ngIf="loaded">
+        <ion-card *ngFor="let publicacion of listaPublicaciones" [routerLink]="['/home/publicacion', publicacion.uid]">
+            <ion-card-header>
+                <ion-card-subtitle>{{publicacion.fechaPublicacion}}</ion-card-subtitle>
+                <ion-card-title>{{publicacion.titulo}}</ion-card-title>
+                <ion-card-subtitle>{{publicacion.etiqueta}}</ion-card-subtitle>
+            </ion-card-header>
 
-        <ion-card-content>
-            {{publicacion.contenido}}
-        </ion-card-content>
-    </ion-card>
+            <ion-card-content>
+                {{publicacion.contenido}}
+            </ion-card-content>
+        </ion-card>
+    </ng-container>
+
+    <ng-container *ngIf="!loaded">
+        <ion-card *ngFor="let number of [0, 1, 2]">
+            <ion-card-header>
+                <ion-card-subtitle>
+                    <ion-skeleton-text [animated]="true" style="width: 30%;"></ion-skeleton-text>
+                </ion-card-subtitle>
+                <ion-card-title>
+                    <ion-skeleton-text [animated]="true" style="width: 50%;"></ion-skeleton-text>
+                </ion-card-title>
+                <ion-card-subtitle>
+                    <ion-skeleton-text [animated]="true" style="width: 30%;"></ion-skeleton-text>
+                </ion-card-subtitle>
+            </ion-card-header>
+
+            <ion-card-content>
+                <ion-skeleton-text [animated]="true" style="width: 90%;"></ion-skeleton-text>
+            </ion-card-content>
+        </ion-card>
+    </ng-container>
 </ion-content>
