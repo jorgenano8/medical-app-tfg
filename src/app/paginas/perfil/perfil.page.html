@@ -5,26 +5,35 @@
 </ion-header> -->
 
 <ion-content>
-    <swiper-container [pagination]="true" *ngIf="loaded">
-        <swiper-slide>
-            <ion-avatar>
-                <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-            </ion-avatar>
-            <ion-label>
-                <h2>{{usuarioModel.nombre}} {{usuarioModel.apellidos}}</h2>
-                <p>PROFESION</p>
-                <p>{{usuarioModel.colegiado}}</p>
-                <p>Torrevieja, Alicante</p>
-            </ion-label>
-        </swiper-slide>
-        <swiper-slide *ngIf="usuarioModel.descripcion">
-            <p class="ion-text-center descripcion">{{usuarioModel.descripcion}}</p>
-        </swiper-slide>
-    </swiper-container>
+    <ng-container *ngIf="loaded">
+        <swiper-container [pagination]="true" *ngIf="loaded">
+            <swiper-slide>
+                <ion-avatar>
+                    <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+                </ion-avatar>
+                <ion-label>
+                    <h2>{{usuarioModel.nombre}} {{usuarioModel.apellidos}}</h2>
+                    <p>PROFESION</p>
+                    <p>{{usuarioModel.colegiado}}</p>
+                    <p>Torrevieja, Alicante</p>
+                </ion-label>
+            </swiper-slide>
+            <swiper-slide *ngIf="usuarioModel.descripcion">
+                <p class="ion-text-center descripcion">{{usuarioModel.descripcion}}</p>
+            </swiper-slide>
+        </swiper-container>
 
-    <ion-button *ngIf="loaded" expand="block" color="danger" (click)="logout()">
-        <ion-icon name="log-out-outline"></ion-icon>
-    </ion-button>
+        <ion-button expand="block" fill="outline" color="danger" (click)="logout()">
+            <ion-icon name="log-out-outline"></ion-icon>
+        </ion-button>
+        <ion-button expand="block">
+            <ion-icon name="create-outline"></ion-icon> Configurar perfil
+        </ion-button>
+    </ng-container>
+
+    <div *ngIf="!loaded" class="loading">
+        <ion-spinner></ion-spinner>
+    </div>
 
     <ng-container *ngIf="loaded">
         <ion-card *ngFor="let publicacion of listaPublicaciones" [routerLink]="['/home/publicacion', publicacion.uid]">

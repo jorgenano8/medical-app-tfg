@@ -29,8 +29,6 @@ export class UsuarioPage implements OnInit {
     ) { }
 
   ngOnInit() {
-    console.log("ngOnInit")
-    this.loaded=false;
     this.comprobarUsuario(this.route.snapshot.params['uid']);
   }
 
@@ -38,6 +36,7 @@ export class UsuarioPage implements OnInit {
   }
 
   comprobarUsuario(uidUsuarioPagina:String){
+    this.loaded=false;
     this.miPerfil=false;
     this.afAuth.onAuthStateChanged((currentUser)=>{
       if(!currentUser){ return; }

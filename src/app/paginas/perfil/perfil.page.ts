@@ -31,11 +31,11 @@ export class PerfilPage implements OnInit {
   }
 
   ionViewWillEnter(){
-    console.log("ionViewWillEnter")
     this.cargarDatosUsuario();
   }
 
   cargarDatosUsuario(){
+    this.loaded = false;
     this.afAuth.onAuthStateChanged((currentUser)=>{
       if(!currentUser){ return; }
       this.usuarioService.getUsuario(currentUser?.uid).subscribe((infoUsuario) => {
