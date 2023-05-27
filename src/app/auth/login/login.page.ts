@@ -11,7 +11,8 @@ import { AuthService } from 'src/app/core/servicios/auth.service';
 })
 export class LoginPage implements OnInit {
 
-  formGroup: FormGroup;
+  public formGroup: FormGroup;
+  public loading: Boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -30,11 +31,15 @@ export class LoginPage implements OnInit {
   onSubmit() {
     if (!this.formGroup.valid) { return; }
 
+    this.loading = true;
+
     const { email, contraseña } = this.formGroup.value;
 
     this.authService.login(email, contraseña).then(() => {
       this.router.navigateByUrl('/home');
+      this.loading = false;
     }).catch((error)=>{
+      this.loading = false;
       this.alertaInicioSesionIncorrecto();
     });
   }

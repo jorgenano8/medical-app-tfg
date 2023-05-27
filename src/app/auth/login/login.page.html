@@ -15,6 +15,9 @@
             <ion-label position="stacked">Contraseña</ion-label>
             <ion-input placeholder="Introduce tu contraseña" type="password" formControlName="contraseña"></ion-input>
         </ion-item>
-        <ion-button type="submit" expand="block" [disabled]="!formGroup.valid">Iniciar sesión</ion-button>
+        <ion-button type="submit" expand="block" fill="outline" [disabled]="!formGroup.valid || loading">
+            <ion-spinner *ngIf="loading"></ion-spinner>
+            <span *ngIf="!loading">Continuar</span>
+        </ion-button>
     </form>
 </ion-content>
