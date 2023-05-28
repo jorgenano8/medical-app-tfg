@@ -13,7 +13,10 @@ export class Usuario {
       public especialidad?: string,
       public fechaNacimiento?: string,
       public colegiado?: string,
-      public dni?: string
+      public dni?: string,
+      public seguidos?: string[],
+      public seguidores?: string[],
+
     ) {}
 
 }

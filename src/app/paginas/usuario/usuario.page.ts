@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Publicacion } from 'src/app/core/modelos/publicacion.model';
 import { Usuario } from 'src/app/core/modelos/usuario.model';
@@ -15,7 +16,7 @@ register();
 })
 export class UsuarioPage implements OnInit {
 
-  private miPerfil: Boolean=false;
+  private userUIDlogged: any;
   public loaded: Boolean= false;
   public usuarioModel: Usuario = {};
   public listaPublicaciones: Publicacion[]=[];
@@ -25,7 +26,8 @@ export class UsuarioPage implements OnInit {
     private publicacionService: PublicacionService,
     private usuarioService: UsuarioService,
     private afAuth: AngularFireAuth,
-    private router: Router
+    private router: Router,
+    private firestore: AngularFirestore
     ) { }
 
   ngOnInit() {
@@ -33,22 +35,19 @@ export class UsuarioPage implements OnInit {
 
   ionViewWillEnter(){
     this.loaded=false;
-    this.miPerfil=false;
     this.comprobarUsuario(this.route.snapshot.params['uid']);
   }
 
   comprobarUsuario(uidUsuarioPagina:String){
     this.afAuth.onAuthStateChanged((currentUser)=>{
       if(!currentUser){ return; }
+      this.userUIDlogged=currentUser.uid;
       if(uidUsuarioPagina===currentUser.uid){
-        this.miPerfil=true;
+        this.router.navigateByUrl('home/perfil');
+        return;
       }
     }).then(()=>{
-      if(!this.miPerfil){
         this.cargarDatosUsuario(this.route.snapshot.params['uid']);
-      }else{
-        this.router.navigateByUrl('home/perfil');
-      }
     }).catch((error)=>{
       console.log(error.message);
     });
@@ -91,6 +90,18 @@ export class UsuarioPage implements OnInit {
     this.usuarioModel.dni = infoUsuario.dni;
     this.usuarioModel.fechaRegistro = infoUsuario.fechaRegistro;
     this.usuarioModel.descripcion = infoUsuario.descripcion;
+  }
+
+  seguirUsuario(){
+    this.usuarioService.updateUsuarioSeguir(this.userUIDlogged, this.route.snapshot.params['uid']).then(()=>{
+      this.usuarioService.updateUsuarioNuevoSeguidor(this.userUIDlogged, this.route.snapshot.params['uid']);
+    })
+  }
+
+  dejarSeguirUsuario(){
+    this.usuarioService.updateUsuarioDejarSeguir(this.userUIDlogged, this.route.snapshot.params['uid']).then(()=>{
+      this.usuarioService.updateUsuarioEliminarSeguidor(this.userUIDlogged, this.route.snapshot.params['uid']);
+    })
   }
 
 }
