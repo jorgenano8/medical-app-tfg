@@ -3,8 +3,10 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { Etiqueta } from 'src/app/core/modelos/etiqueta.model';
 import { Publicacion } from 'src/app/core/modelos/publicacion.model';
 import { Usuario } from 'src/app/core/modelos/usuario.model';
+import { EtiquetaService } from 'src/app/core/servicios/etiqueta.service';
 import { PublicacionService } from 'src/app/core/servicios/publicacion.service';
 import { UsuarioService } from 'src/app/core/servicios/usuario.service';
 
@@ -17,6 +19,7 @@ export class CrearPublicacionPage implements OnInit {
 
   public formGroup: FormGroup;
   public usuarioModel: Usuario = {};
+  public listaEtiquetas: any= [];
   public loading: Boolean = false;
 
   constructor(
@@ -24,11 +27,13 @@ export class CrearPublicacionPage implements OnInit {
     private afAuth: AngularFireAuth,
     private usuarioService: UsuarioService,
     private publicacionService: PublicacionService,
+    private etiquetaService: EtiquetaService,
     private router: Router,
     private alertController: AlertController) {
       this.formGroup = this.formBuilder.group({
         titulo: ['', [Validators.required, Validators.maxLength(70)]],
-        contenido: ['', [Validators.required]]
+        contenido: ['', [Validators.required]],
+        etiqueta: ['', [Validators.required]]
       });
      }
 
@@ -37,6 +42,7 @@ export class CrearPublicacionPage implements OnInit {
 
   ionViewWillEnter(){
     this.prepararDatosUsuario();
+    this.cargarEtiquetas();
   }
 
   ionViewWillLeave(){
@@ -48,7 +54,7 @@ export class CrearPublicacionPage implements OnInit {
 
     this.loading = true;
 
-    const { titulo, contenido} = this.formGroup.value;
+    const { titulo, contenido, etiqueta} = this.formGroup.value;
 
     const infoPublicacion:Publicacion={
       uid: "",
@@ -56,7 +62,7 @@ export class CrearPublicacionPage implements OnInit {
       titulo:titulo,
       contenido:contenido.replace(/\n/g, '<br>'),
       fechaPublicacion: new Date().toLocaleString(),
-      etiqueta:'test',
+      etiqueta: etiqueta,
     }
 
     this.publicacionService.newPublicacionVacia().then((docRef) => {
@@ -83,6 +89,21 @@ export class CrearPublicacionPage implements OnInit {
     });
   }
 
+  rellenarDatosUsuario(infoUsuario: any){
+    this.usuarioModel.nombre = infoUsuario.nombre;
+    this.usuarioModel.apellidos = infoUsuario.apellidos;
+    this.usuarioModel.uid = infoUsuario.uid;
+  }
+
+  cargarEtiquetas(){
+    this.listaEtiquetas=[];
+    this.etiquetaService.getEtiquetas().ref.get().then((resEtiqueta)=>{
+      resEtiqueta.forEach(infoEtiqueta=>{
+        this.listaEtiquetas.push(infoEtiqueta.data().nombre);
+      })
+    })
+  }
+
   async alertaPublicaciónIncorrecto() {
     const alert = await this.alertController.create({
       header: '¡Ups!',
@@ -93,10 +114,6 @@ export class CrearPublicacionPage implements OnInit {
     alert.present();
   }
 
-  rellenarDatosUsuario(infoUsuario: any){
-    this.usuarioModel.nombre = infoUsuario.nombre;
-    this.usuarioModel.apellidos = infoUsuario.apellidos;
-    this.usuarioModel.uid = infoUsuario.uid;
-  }
+
 
 }
