@@ -49,7 +49,7 @@ export class PerfilPage implements OnInit {
 
   cargarPublicacionesUsuario(idUsuario: any){
     this.listaPublicaciones=[];
-    this.publicacionService.getPublicaciones().ref.where('usuario', '==', idUsuario).orderBy('fechaPublicacion', 'desc').get().then((resPublicacion)=>{
+    this.publicacionService.getPublicaciones().ref.where('usuario', '==', idUsuario).orderBy('dateSystem', 'desc').get().then((resPublicacion)=>{
       resPublicacion.forEach(infoPublicacion =>{
         this.rellenarDatosPublicacion(infoPublicacion);
       })

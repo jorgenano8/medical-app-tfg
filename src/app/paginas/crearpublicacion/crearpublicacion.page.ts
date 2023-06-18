@@ -62,6 +62,7 @@ export class CrearPublicacionPage implements OnInit {
       titulo:titulo,
       contenido:contenido.replace(/\n/g, '<br>'),
       fechaPublicacion: new Date().toLocaleString(),
+      dateSystem: new Date(),
       etiqueta: etiqueta,
     }
 

@@ -17,29 +17,7 @@ export class InicioPage implements OnInit {
   }
 
   ionViewWillEnter(){
-    console.log("ionViewWillEnter")
-    //this.cargarPublicaciones();
-  }
-
-  cargarPublicaciones(){
-    this.listaPublicaciones=[];
-    this.publicacionService.getPublicaciones().valueChanges().subscribe((publicaciones)=>{
-      this.listaPublicaciones=publicaciones.map((publicacion)=>{
-        return new Publicacion(publicacion.uid, publicacion.usuario, publicacion.fechaPublicacion, publicacion.etiqueta, publicacion.titulo, publicacion.contenido);
-      });
-      this.ordenarPublicaciones();
-    });
-  }
-
-  ordenarPublicaciones(){
-    this.listaPublicaciones.sort((a, b) => {
-      const dateA = a.fechaPublicacion ? new Date(a.fechaPublicacion) : undefined;
-      const dateB = b.fechaPublicacion ? new Date(b.fechaPublicacion) : undefined;
-      if (dateA && dateB) {
-        return dateB.getTime() - dateA.getTime();
-      }
-      return dateB ? 1 : -1;
-    });
+    console.log("ionViewWillEnter");
   }
 
 }
