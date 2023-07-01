@@ -56,6 +56,7 @@ export class PublicacionPage implements OnInit {
     this.usuarioModel.uid = infoUsuario.uid;
     this.usuarioModel.nombre = infoUsuario.nombre;
     this.usuarioModel.apellidos = infoUsuario.apellidos;
+    this.usuarioModel.especialidad = infoUsuario.especialidad;
     this.loaded=true;
 
   }

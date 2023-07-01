@@ -40,7 +40,7 @@ export class PerfilPage implements OnInit {
       if(!currentUser){ return; }
       this.usuarioService.getUsuario(currentUser?.uid).subscribe((infoUsuario) => {
         this.rellenarDatosUsuario(infoUsuario.data());
-        this.cargarPublicacionesUsuario(this.usuarioModel.uid);
+        this.cargarPublicacionesUsuario(currentUser.uid);
       })
     }).catch((error)=>{
       console.log(error.message);
@@ -71,11 +71,8 @@ export class PerfilPage implements OnInit {
   rellenarDatosUsuario(infoUsuario: any){
     this.usuarioModel.nombre = infoUsuario.nombre;
     this.usuarioModel.apellidos = infoUsuario.apellidos;
-    this.usuarioModel.uid = infoUsuario.uid;
-    this.usuarioModel.email = infoUsuario.email;
     this.usuarioModel.colegiado = infoUsuario.colegiado;
-    this.usuarioModel.dni = infoUsuario.dni;
-    this.usuarioModel.fechaRegistro = infoUsuario.fechaRegistro;
+    this.usuarioModel.especialidad = infoUsuario.especialidad;
     this.usuarioModel.descripcion = infoUsuario.descripcion;
   }
 
