@@ -56,7 +56,7 @@ export class UsuarioPage implements OnInit {
   cargarDatosUsuario(uidUsuario: String){
     this.usuarioService.getUsuario(uidUsuario).subscribe((infoUsuario)=>{
       this.rellenarDatosUsuario(infoUsuario.data());
-      this.cargarPublicacionesUsuario(this.usuarioModel.uid);
+      this.cargarPublicacionesUsuario(uidUsuario);
     })
   }
 
@@ -84,12 +84,9 @@ export class UsuarioPage implements OnInit {
   rellenarDatosUsuario(infoUsuario: any){
     this.usuarioModel.nombre = infoUsuario.nombre;
     this.usuarioModel.apellidos = infoUsuario.apellidos;
-    this.usuarioModel.uid = infoUsuario.uid;
-    this.usuarioModel.email = infoUsuario.email;
     this.usuarioModel.colegiado = infoUsuario.colegiado;
-    this.usuarioModel.dni = infoUsuario.dni;
-    this.usuarioModel.fechaRegistro = infoUsuario.fechaRegistro;
     this.usuarioModel.descripcion = infoUsuario.descripcion;
+    this.usuarioModel.especialidad = infoUsuario.especialidad;
   }
 
   seguirUsuario(){

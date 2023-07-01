@@ -1,8 +1,14 @@
-<ion-content>
-    <ion-button fill="clear" color="dark">
-        <ion-icon name="arrow-back"></ion-icon>
-    </ion-button>
+<ion-header>
+    <ion-toolbar color="light">
+        <ion-buttons slot="start">
+            <ion-back-button text="" default-href="#"></ion-back-button>
+        </ion-buttons>
+        <ion-searchbar type="text" placeholder="Búsqueda"></ion-searchbar>
+        <ion-progress-bar *ngIf="!loaded" type="indeterminate"></ion-progress-bar>
+    </ion-toolbar>
+</ion-header>
 
+<ion-content>
     <ion-list *ngIf="loaded">
         <ion-item lines="none" [routerLink]="['/home/usuario/', usuarioModel.uid]" detail="false">
             <ion-avatar slot="start">

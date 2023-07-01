@@ -1,8 +1,12 @@
-<!-- <ion-header>
-    <ion-toolbar>
-        <ion-title>Perfil</ion-title>
+<ion-header>
+    <ion-toolbar color="light">
+        <ion-buttons slot="start">
+            <ion-back-button text="" default-href="#"></ion-back-button>
+        </ion-buttons>
+        <ion-searchbar type="text" placeholder="{{usuarioModel.nombre}} {{usuarioModel.apellidos}}"></ion-searchbar>
+        <ion-progress-bar *ngIf="!loaded" type="indeterminate"></ion-progress-bar>
     </ion-toolbar>
-</ion-header> -->
+</ion-header>
 
 <ion-content>
     <ng-container *ngIf="loaded">

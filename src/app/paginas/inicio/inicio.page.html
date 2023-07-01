@@ -1,3 +1,10 @@
+<ion-header>
+    <ion-toolbar color="light">
+        <ion-searchbar type="text" placeholder="Búsqueda"></ion-searchbar>
+        <ion-progress-bar *ngIf="!loaded" type="indeterminate"></ion-progress-bar>
+    </ion-toolbar>
+</ion-header>
+
 <ion-content>
     <ng-container *ngIf="loaded">
         <ion-card *ngFor="let publicacion of listaPublicaciones" [routerLink]="['/home/publicacion', publicacion.uid]">
