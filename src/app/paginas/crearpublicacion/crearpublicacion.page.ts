@@ -50,7 +50,7 @@ export class CrearPublicacionPage implements OnInit {
     this.formGroup.reset();
   }
 
-  onSubmit(){
+  publicarPublicacion(){
     if (!this.formGroup.valid) { return; }
 
     this.loading = true;
