@@ -30,11 +30,11 @@ export class InicioPage implements OnInit {
   ionViewWillEnter(){
     this.uidUsuarios=[];
     this.listaPublicaciones=[];
-    this.cargarSeguidos();
+    this.loaded = false;
+    this.cargarPublicaciones();
   }
 
-  cargarSeguidos(){
-    this.loaded = false;
+  cargarPublicaciones(){
     this.afAuth.onAuthStateChanged((currentUser)=>{
       if(!currentUser){ return; }
 
@@ -49,7 +49,7 @@ export class InicioPage implements OnInit {
             this.listaPublicaciones.push(publicacion.data());
           })
         })
-
+        this.loaded=true;
       })
     }).catch((error)=>{
       console.log(error.message);
