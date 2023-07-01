@@ -38,22 +38,28 @@
             </swiper-slide>
         </swiper-container>
 
-        <div class="botones">
-            <ng-container>
-                <ion-button expand="block" (click)="seguirUsuario()">
-                    <ion-icon name="person-add-outline"></ion-icon> Seguir
-                </ion-button>
-            </ng-container>
+        <ng-container *ngIf="mostrarBotones">
+            <div class="botones">
+                <ng-container *ngIf="!siguiendo">
+                    <ion-button expand="block" (click)="seguirUsuario()">
+                        <ion-icon name="person-add-outline"></ion-icon> Seguir
+                    </ion-button>
+                </ng-container>
 
-            <ng-container>
-                <ion-button expand="block">
-                    <ion-icon name="chatbubbles-outline"></ion-icon> Enviar mensaje
-                </ion-button>
-                <ion-button expand="block" color="danger" fill="outline" (click)="dejarSeguirUsuario()">
-                    <ion-icon name="person-remove-outline"></ion-icon> Dejar de seguir
-                </ion-button>
-            </ng-container>
-        </div>
+                <ng-container *ngIf="siguiendo && seguidor">
+                    <ion-button expand="block">
+                        <ion-icon name="chatbubbles-outline"></ion-icon> Enviar mensaje
+                    </ion-button>
+                </ng-container>
+
+                <ng-container *ngIf="siguiendo">
+                    <ion-button expand="block" color="danger" fill="outline" (click)="dejarSeguirUsuario()">
+                        <ion-icon name="person-remove-outline"></ion-icon> Dejar de seguir
+                    </ion-button>
+                </ng-container>
+            </div>
+        </ng-container>
+
     </ng-container>
 
     <div *ngIf="!loaded" class="loading">

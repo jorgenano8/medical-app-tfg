@@ -24,6 +24,10 @@ export class UsuarioPage implements OnInit {
   public terminoBusqueda: string = '';
   public listaBusquedaUsuarios: Usuario[]=[];
 
+  public mostrarBotones: boolean = true;
+  public siguiendo: boolean = false;
+  public seguidor: boolean = false;
+
   constructor(
     private route: ActivatedRoute,
     private publicacionService: PublicacionService,
@@ -61,6 +65,15 @@ export class UsuarioPage implements OnInit {
   cargarDatosUsuario(uidUsuario: String){
     this.usuarioService.getUsuario(uidUsuario).subscribe((infoUsuario)=>{
       this.rellenarDatosUsuario(infoUsuario.data());
+
+      if(infoUsuario.data()?.seguidores?.includes(this.userUIDlogged)){
+        this.siguiendo=true;
+      }
+
+      if(infoUsuario.data()?.seguidos?.includes(this.userUIDlogged)){
+        this.seguidor=true;
+      }
+
       this.cargarPublicacionesUsuario(uidUsuario);
     })
   }
@@ -95,15 +108,21 @@ export class UsuarioPage implements OnInit {
   }
 
   seguirUsuario(){
+    this.mostrarBotones=false;
     this.usuarioService.updateUsuarioSeguir(this.userUIDlogged, this.route.snapshot.params['uid']).then(()=>{
       this.usuarioService.updateUsuarioNuevoSeguidor(this.userUIDlogged, this.route.snapshot.params['uid']);
+      this.siguiendo=true;
     })
+    this.mostrarBotones=true;
   }
 
   dejarSeguirUsuario(){
+    this.mostrarBotones=false;
     this.usuarioService.updateUsuarioDejarSeguir(this.userUIDlogged, this.route.snapshot.params['uid']).then(()=>{
       this.usuarioService.updateUsuarioEliminarSeguidor(this.userUIDlogged, this.route.snapshot.params['uid']);
+      this.siguiendo=false;
     })
+    this.mostrarBotones=true;
   }
 
   buscarUsuarios() {
@@ -112,6 +131,8 @@ export class UsuarioPage implements OnInit {
       listaUsuariosBusqueda.forEach(usuario=>{
         this.listaBusquedaUsuarios.push(usuario.data());
       })
+      console.log(this.listaBusquedaUsuarios)
+
     }).catch((error)=>{
       console.log(error.message);
     })
