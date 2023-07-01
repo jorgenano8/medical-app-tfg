@@ -15,6 +15,8 @@ export class RegistroPage implements OnInit {
 
   public formGroup: FormGroup;
   public loading: Boolean = false;
+  public listaEspecialidades: string[] = ["Médico", "Farmacéutico", "Dentista", "Veterinario", "Psicólogo", "Enfermero",
+  "Fisioterapeuta", "Podólogo", "Óptico-Optometrista", "Logopeda", "Terapeuta ocupacional"]
 
   constructor(private authService: AuthService,
               private formBuilder: FormBuilder,
@@ -61,7 +63,8 @@ export class RegistroPage implements OnInit {
         dni : dni,
         email : email,
         fechaRegistro : new Date().toLocaleString(),
-        tipo : "normal"
+        tipo : "normal",
+        especialidad: this.listaEspecialidades[Math.floor(Math.random()*this.listaEspecialidades.length)]
       };
 
       this.usuarioService.newUsuario(uid, infoUsuario).then(()=>{
