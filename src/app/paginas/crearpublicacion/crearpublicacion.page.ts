@@ -94,6 +94,7 @@ export class CrearPublicacionPage implements OnInit {
     this.usuarioModel.nombre = infoUsuario.nombre;
     this.usuarioModel.apellidos = infoUsuario.apellidos;
     this.usuarioModel.uid = infoUsuario.uid;
+    this.usuarioModel.especialidad = infoUsuario.especialidad;
   }
 
   cargarEtiquetas(){
