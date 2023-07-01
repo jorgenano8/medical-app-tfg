@@ -41,6 +41,7 @@ export class CrearPublicacionPage implements OnInit {
   }
 
   ionViewWillEnter(){
+    this.formGroup.reset();
     this.prepararDatosUsuario();
     this.cargarEtiquetas();
   }

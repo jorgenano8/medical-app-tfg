@@ -34,9 +34,17 @@ export class PerfilPage implements OnInit {
   }
 
   ionViewWillEnter(){
+    this.resetPagina()
+    this.cargarDatosUsuario();
+  }
+
+  ionViewWillLeave(){
+    this.resetPagina();
+  }
+
+  resetPagina(){
     this.listaBusquedaUsuarios=[];
     this.terminoBusqueda='';
-    this.cargarDatosUsuario();
   }
 
   cargarDatosUsuario(){

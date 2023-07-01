@@ -41,10 +41,18 @@ export class UsuarioPage implements OnInit {
   }
 
   ionViewWillEnter(){
+    this.resetPagina();
+    this.comprobarUsuario(this.route.snapshot.params['uid']);
+  }
+
+  ionViewWillLeave(){
+    this.resetPagina();
+  }
+
+  resetPagina(){
     this.listaBusquedaUsuarios=[];
     this.terminoBusqueda='';
     this.loaded=false;
-    this.comprobarUsuario(this.route.snapshot.params['uid']);
   }
 
   comprobarUsuario(uidUsuarioPagina:String){

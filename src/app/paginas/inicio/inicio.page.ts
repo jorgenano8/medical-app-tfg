@@ -33,12 +33,20 @@ export class InicioPage implements OnInit {
   }
 
   ionViewWillEnter(){
+    this.resetPagina();
+    this.cargarPublicaciones();
+  }
+
+  ionViewWillLeave(){
+    this.resetPagina();
+  }
+
+  resetPagina(){
     this.uidUsuarios=[];
     this.listaPublicaciones=[];
     this.listaBusquedaUsuarios=[];
     this.terminoBusqueda='';
     this.loaded = false;
-    this.cargarPublicaciones();
   }
 
   cargarPublicaciones(){
