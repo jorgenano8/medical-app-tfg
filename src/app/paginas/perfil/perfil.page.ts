@@ -20,6 +20,9 @@ export class PerfilPage implements OnInit {
   public listaPublicaciones: Publicacion[]=[];
   public loaded :  Boolean = false;
 
+  public terminoBusqueda: string = '';
+  public listaBusquedaUsuarios: Usuario[]=[];
+
   constructor(
     private usuarioService: UsuarioService,
     private publicacionService: PublicacionService,
@@ -31,6 +34,8 @@ export class PerfilPage implements OnInit {
   }
 
   ionViewWillEnter(){
+    this.listaBusquedaUsuarios=[];
+    this.terminoBusqueda='';
     this.cargarDatosUsuario();
   }
 
@@ -74,6 +79,17 @@ export class PerfilPage implements OnInit {
     this.usuarioModel.colegiado = infoUsuario.colegiado;
     this.usuarioModel.especialidad = infoUsuario.especialidad;
     this.usuarioModel.descripcion = infoUsuario.descripcion;
+  }
+
+  buscarUsuarios() {
+    this.listaBusquedaUsuarios=[];
+    this.usuarioService.getUsuarios().ref.where('nombre', '==', this.terminoBusqueda).get().then((listaUsuariosBusqueda)=>{
+      listaUsuariosBusqueda.forEach(usuario=>{
+        this.listaBusquedaUsuarios.push(usuario.data());
+      })
+    }).catch((error)=>{
+      console.log(error.message);
+    })
   }
 
   logout(){

@@ -3,9 +3,20 @@
         <ion-buttons slot="start">
             <ion-back-button text="" default-href="#"></ion-back-button>
         </ion-buttons>
-        <ion-searchbar type="text" placeholder="{{usuarioModel.nombre}} {{usuarioModel.apellidos}}"></ion-searchbar>
+        <ion-searchbar [(ngModel)]="terminoBusqueda" (ionChange)="buscarUsuarios()" type="text" placeholder="{{usuarioModel.nombre}} {{usuarioModel.apellidos}}"></ion-searchbar>
         <ion-progress-bar *ngIf="!loaded" type="indeterminate"></ion-progress-bar>
     </ion-toolbar>
+    <ion-list *ngIf="true">
+        <ion-item *ngFor="let usuarioModel of listaBusquedaUsuarios" [routerLink]="['/home/usuario/', usuarioModel.uid]" detail="false">
+            <ion-avatar slot="start">
+                <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+            </ion-avatar>
+            <ion-label>
+                <h2>{{usuarioModel.nombre}} {{usuarioModel.apellidos}}</h2>
+                <p>{{usuarioModel.especialidad}}</p>
+            </ion-label>
+        </ion-item>
+    </ion-list>
 </ion-header>
 
 <ion-content>

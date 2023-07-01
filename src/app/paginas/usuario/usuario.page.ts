@@ -21,6 +21,9 @@ export class UsuarioPage implements OnInit {
   public usuarioModel: Usuario = {};
   public listaPublicaciones: Publicacion[]=[];
 
+  public terminoBusqueda: string = '';
+  public listaBusquedaUsuarios: Usuario[]=[];
+
   constructor(
     private route: ActivatedRoute,
     private publicacionService: PublicacionService,
@@ -34,6 +37,8 @@ export class UsuarioPage implements OnInit {
   }
 
   ionViewWillEnter(){
+    this.listaBusquedaUsuarios=[];
+    this.terminoBusqueda='';
     this.loaded=false;
     this.comprobarUsuario(this.route.snapshot.params['uid']);
   }
@@ -98,6 +103,17 @@ export class UsuarioPage implements OnInit {
   dejarSeguirUsuario(){
     this.usuarioService.updateUsuarioDejarSeguir(this.userUIDlogged, this.route.snapshot.params['uid']).then(()=>{
       this.usuarioService.updateUsuarioEliminarSeguidor(this.userUIDlogged, this.route.snapshot.params['uid']);
+    })
+  }
+
+  buscarUsuarios() {
+    this.listaBusquedaUsuarios=[];
+    this.usuarioService.getUsuarios().ref.where('nombre', '==', this.terminoBusqueda).get().then((listaUsuariosBusqueda)=>{
+      listaUsuariosBusqueda.forEach(usuario=>{
+        this.listaBusquedaUsuarios.push(usuario.data());
+      })
+    }).catch((error)=>{
+      console.log(error.message);
     })
   }
 
