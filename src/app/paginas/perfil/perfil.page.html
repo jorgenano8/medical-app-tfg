@@ -2,6 +2,11 @@
     <ion-toolbar color="light">
         <ion-searchbar [(ngModel)]="terminoBusqueda" (ionChange)="buscarUsuarios()" type="text" placeholder="{{usuarioModel.nombre}} {{usuarioModel.apellidos}}"></ion-searchbar>
         <ion-progress-bar *ngIf="!loaded" type="indeterminate"></ion-progress-bar>
+        <ion-buttons slot="primary">
+            <ion-button (click)="logout()">
+                <ion-icon slot="icon-only" name="exit-outline" color="danger"></ion-icon>
+            </ion-button>
+        </ion-buttons>
     </ion-toolbar>
     <ion-list *ngIf="true">
         <ion-item *ngFor="let usuarioModel of listaBusquedaUsuarios" [routerLink]="['/home/usuario/', usuarioModel.uid]" lines="full">
@@ -34,10 +39,6 @@
                 <p class="ion-text-center descripcion">{{usuarioModel.descripcion}}</p>
             </swiper-slide>
         </swiper-container>
-
-        <ion-button expand="block" fill="outline" color="danger" (click)="logout()">
-            <ion-icon name="log-out-outline"></ion-icon>
-        </ion-button>
         <ion-button expand="block">
             <ion-icon name="create-outline"></ion-icon> Configurar perfil
         </ion-button>
