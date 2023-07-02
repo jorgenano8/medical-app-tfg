@@ -65,11 +65,17 @@ export class CrearPublicacionPage implements OnInit {
       fechaPublicacion: new Date().toLocaleString(),
       dateSystem: new Date(),
       etiqueta: etiqueta,
+      nombre: "",
+      apellidos: "",
+      especialidad: ""
     }
 
     this.publicacionService.newPublicacionVacia().then((docRef) => {
       infoPublicacion.uid=docRef.ref.id;
       infoPublicacion.usuario=this.usuarioModel.uid;
+      infoPublicacion.nombre=this.usuarioModel.nombre;
+      infoPublicacion.apellidos=this.usuarioModel.apellidos;
+      infoPublicacion.especialidad=this.usuarioModel.especialidad;
       docRef.set(infoPublicacion);
     }).then(()=>{
       this.loading = false;

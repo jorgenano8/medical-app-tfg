@@ -66,7 +66,7 @@ export class PerfilPage implements OnInit {
       resPublicacion.forEach(infoPublicacion =>{
         this.rellenarDatosPublicacion(infoPublicacion);
       })
-      this.loaded = true;
+    this.loaded = true;
     })
   }
 
@@ -74,6 +74,9 @@ export class PerfilPage implements OnInit {
     this.listaPublicaciones.push({
       uid:infoPublicacion.data().uid,
       usuario:infoPublicacion.data().usuario,
+      nombre:infoPublicacion.data().nombre,
+      apellidos:infoPublicacion.data().apellidos,
+      especialidad:infoPublicacion.data().especialidad,
       fechaPublicacion: infoPublicacion.data().fechaPublicacion,
       etiqueta: infoPublicacion.data().etiqueta,
       titulo: infoPublicacion.data().titulo,

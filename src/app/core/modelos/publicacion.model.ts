@@ -3,6 +3,9 @@ export class Publicacion {
   constructor(
     public uid?: string,
     public usuario?: string,
+    public nombre?: string,
+    public apellidos?: string,
+    public especialidad?: string,
     public dateSystem?: Date,
     public fechaPublicacion?: string,
     public etiqueta?: string,

@@ -89,9 +89,10 @@ export class UsuarioPage implements OnInit {
   cargarPublicacionesUsuario(idUsuario: any){
     this.listaPublicaciones=[];
     this.publicacionService.getPublicaciones().ref.where('usuario', '==', idUsuario).orderBy('fechaPublicacion', 'desc').get().then((resPublicacion)=>{
-      resPublicacion.forEach(infoPublicacion =>{
-        this.rellenarDatosPublicacion(infoPublicacion);
-      })
+        resPublicacion.forEach(infoPublicacion =>{
+          this.rellenarDatosPublicacion(infoPublicacion);
+        })
+      this.loaded=true;
     })
   }
 
@@ -99,12 +100,14 @@ export class UsuarioPage implements OnInit {
     this.listaPublicaciones.push({
       uid:infoPublicacion.data().uid,
       usuario:infoPublicacion.data().usuario,
+      nombre:infoPublicacion.data().nombre,
+      apellidos:infoPublicacion.data().apellidos,
+      especialidad:infoPublicacion.data().especialidad,
       fechaPublicacion: infoPublicacion.data().fechaPublicacion,
       etiqueta: infoPublicacion.data().etiqueta,
       titulo: infoPublicacion.data().titulo,
       contenido: infoPublicacion.data().contenido
     });
-    this.loaded=true;
   }
 
   rellenarDatosUsuario(infoUsuario: any){
