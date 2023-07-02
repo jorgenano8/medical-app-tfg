@@ -18,6 +18,7 @@ export class InicioPage implements OnInit {
   public listaPublicaciones: Publicacion[]=[];
   public uidUsuarios: any[] = [];
   public loaded :  Boolean = false;
+  public existenPublicaciones: Boolean = false;
 
   public terminoBusqueda: string = '';
   public listaBusquedaUsuarios: Usuario[]=[];
@@ -62,6 +63,7 @@ export class InicioPage implements OnInit {
         this.publicacionService.getPublicaciones().ref.where('usuario', 'in', this.uidUsuarios).orderBy('dateSystem', 'desc').get().then((publicaciones)=>{
           publicaciones.forEach(publicacion=>{
             this.listaPublicaciones.push(publicacion.data());
+            this.existenPublicaciones=true;
           })
         })
         this.loaded=true;
