@@ -5,6 +5,11 @@
         </ion-buttons>
         <ion-searchbar type="text" placeholder="Búsqueda"></ion-searchbar>
         <ion-progress-bar *ngIf="!loaded" type="indeterminate"></ion-progress-bar>
+        <ion-buttons slot="primary">
+            <ion-button [routerLink]="['/home/perfil']">
+                <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+            </ion-button>
+        </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
