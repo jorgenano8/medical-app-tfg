@@ -23,7 +23,13 @@ const routes: Routes = [
     path: 'registro',
     canActivate: [Noauthguard],
     loadChildren: () => import('./auth/registro/registro.module').then( m => m.RegistroPageModule)
+  },
+  {
+    path: 'nuevacontrasenya',
+    canActivate: [Noauthguard],
+    loadChildren: () => import('./auth/nuevacontrasenya/nuevacontrasenya.module').then( m => m.NuevacontrasenyaPageModule)
   }
+
 ];
 @NgModule({
   imports: [

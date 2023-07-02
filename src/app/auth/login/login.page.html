@@ -16,7 +16,7 @@
             <ion-input placeholder="Introduce tu contraseña" type="password" formControlName="contraseña" required="true"></ion-input>
         </ion-item>
 
-        <p><a [routerLink]="['/login']">¿Has olvidado tu contraseña?</a></p>
+        <p><a [routerLink]="['/nuevacontrasenya']">¿Has olvidado tu contraseña?</a></p>
 
         <ion-button class="buttonLoginForm" type="submit" expand="block" [disabled]="!formGroup.valid || loading">
             <ion-spinner *ngIf="loading"></ion-spinner>
