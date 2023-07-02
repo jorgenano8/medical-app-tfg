@@ -18,6 +18,7 @@ export class UsuarioPage implements OnInit {
 
   private userUIDlogged: any;
   public loaded: Boolean= false;
+  public existenPublicaciones: Boolean= false;
   public usuarioModel: Usuario = {};
   public listaPublicaciones: Publicacion[]=[];
 
@@ -53,6 +54,7 @@ export class UsuarioPage implements OnInit {
     this.listaBusquedaUsuarios=[];
     this.terminoBusqueda='';
     this.loaded=false;
+    this.existenPublicaciones=false;
   }
 
   comprobarUsuario(uidUsuarioPagina:String){
@@ -90,10 +92,14 @@ export class UsuarioPage implements OnInit {
     this.listaPublicaciones=[];
     this.publicacionService.getPublicaciones().ref.where('usuario', '==', idUsuario).orderBy('fechaPublicacion', 'desc').get().then((resPublicacion)=>{
         resPublicacion.forEach(infoPublicacion =>{
+          this.existenPublicaciones=true;
           this.rellenarDatosPublicacion(infoPublicacion);
         })
+    }).then(()=>{
       this.loaded=true;
-    })
+    }).catch((error)=>{
+      console.log(error.message);
+    });
   }
 
   rellenarDatosPublicacion(infoPublicacion: any){
@@ -123,7 +129,9 @@ export class UsuarioPage implements OnInit {
     this.usuarioService.updateUsuarioSeguir(this.userUIDlogged, this.route.snapshot.params['uid']).then(()=>{
       this.usuarioService.updateUsuarioNuevoSeguidor(this.userUIDlogged, this.route.snapshot.params['uid']);
       this.siguiendo=true;
-    })
+    }).catch((error)=>{
+      console.log(error.message);
+    });
     this.mostrarBotones=true;
   }
 
@@ -132,7 +140,9 @@ export class UsuarioPage implements OnInit {
     this.usuarioService.updateUsuarioDejarSeguir(this.userUIDlogged, this.route.snapshot.params['uid']).then(()=>{
       this.usuarioService.updateUsuarioEliminarSeguidor(this.userUIDlogged, this.route.snapshot.params['uid']);
       this.siguiendo=false;
-    })
+    }).catch((error)=>{
+      console.log(error.message);
+    });
     this.mostrarBotones=true;
   }
 
@@ -142,8 +152,6 @@ export class UsuarioPage implements OnInit {
       listaUsuariosBusqueda.forEach(usuario=>{
         this.listaBusquedaUsuarios.push(usuario.data());
       })
-      console.log(this.listaBusquedaUsuarios)
-
     }).catch((error)=>{
       console.log(error.message);
     })

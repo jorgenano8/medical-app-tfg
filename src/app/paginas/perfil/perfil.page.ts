@@ -19,6 +19,7 @@ export class PerfilPage implements OnInit {
   public usuarioModel: Usuario = {};
   public listaPublicaciones: Publicacion[]=[];
   public loaded :  Boolean = false;
+  public existenPublicaciones :  Boolean = false;
 
   public terminoBusqueda: string = '';
   public listaBusquedaUsuarios: Usuario[]=[];
@@ -45,6 +46,8 @@ export class PerfilPage implements OnInit {
   resetPagina(){
     this.listaBusquedaUsuarios=[];
     this.terminoBusqueda='';
+    this.loaded=false;
+    this.existenPublicaciones=false;
   }
 
   cargarDatosUsuario(){
@@ -64,10 +67,14 @@ export class PerfilPage implements OnInit {
     this.listaPublicaciones=[];
     this.publicacionService.getPublicaciones().ref.where('usuario', '==', idUsuario).orderBy('dateSystem', 'desc').get().then((resPublicacion)=>{
       resPublicacion.forEach(infoPublicacion =>{
+        this.existenPublicaciones=true;
         this.rellenarDatosPublicacion(infoPublicacion);
       })
-    this.loaded = true;
-    })
+    }).then(()=>{
+      this.loaded=true;
+    }).catch((error)=>{
+      console.log(error.message);
+    });
   }
 
   rellenarDatosPublicacion(infoPublicacion: any){

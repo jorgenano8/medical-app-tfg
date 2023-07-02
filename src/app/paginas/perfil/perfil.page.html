@@ -48,7 +48,12 @@
         <ion-spinner></ion-spinner>
     </div>
 
-    <ng-container *ngIf="loaded">
+    <ng-container *ngIf="loaded && !existenPublicaciones">
+        <p class="ion-text-center ion-padding">¡Vaya! Parece que todavía no tienes ninguna publicación. <a [routerLink]="['/home/crearpublicacion']">Crea una publicación</a> para empezar a compartir contenido con tus seguidores.</p>
+        <ion-img alt="No existen publicaciones cargadas" src="assets\images\20943401.jpg"></ion-img>
+    </ng-container>
+
+    <ng-container *ngIf="loaded && existenPublicaciones">
         <ion-card *ngFor="let publicacion of listaPublicaciones" [routerLink]="['/home/publicacion', publicacion.uid]">
             <ion-item lines="none">
                 <ion-avatar slot="start">

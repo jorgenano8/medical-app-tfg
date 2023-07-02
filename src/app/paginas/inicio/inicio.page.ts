@@ -48,6 +48,7 @@ export class InicioPage implements OnInit {
     this.listaBusquedaUsuarios=[];
     this.terminoBusqueda='';
     this.loaded = false;
+    this.existenPublicaciones = false;
   }
 
   cargarPublicaciones(){
@@ -61,12 +62,13 @@ export class InicioPage implements OnInit {
         })
 
         this.publicacionService.getPublicaciones().ref.where('usuario', 'in', this.uidUsuarios).orderBy('dateSystem', 'desc').get().then((publicaciones)=>{
+          this.existenPublicaciones=true;
           publicaciones.forEach(publicacion=>{
             this.listaPublicaciones.push(publicacion.data());
-            this.existenPublicaciones=true;
           })
+        }).then(()=>{
+          this.loaded=true;
         })
-        this.loaded=true;
       })
     }).catch((error)=>{
       console.log(error.message);
