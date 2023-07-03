@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { User } from 'firebase/auth';
+import { User, getAuth } from 'firebase/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +26,10 @@ export class AuthService {
 
   async registro(email: string, contraseña: string){
     return await this.afAuth.createUserWithEmailAndPassword(email, contraseña);
+  }
+
+  async nuevacontrasenya(email: string){
+    return await this.afAuth.sendPasswordResetEmail(email);
   }
 
   async logout(){
