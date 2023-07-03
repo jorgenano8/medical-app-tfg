@@ -5,6 +5,7 @@ import { Usuario } from 'src/app/core/modelos/usuario.model';
 import { PublicacionService } from 'src/app/core/servicios/publicacion.service';
 import { UsuarioService } from 'src/app/core/servicios/usuario.service';
 import { Location } from '@angular/common';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
   selector: 'app-publicacion',
@@ -17,19 +18,31 @@ export class PublicacionPage implements OnInit {
   public usuarioModel: Usuario={};
 
   public loaded = false;
+  public creadorPublicacion = false;
+  public usuarioAdmin = false;
+  public usuarioMod = false;
 
   constructor(
     private route: ActivatedRoute,
     private publicacionService: PublicacionService,
     private usuarioService: UsuarioService,
-    private location: Location) { }
+    private location: Location,
+    private afAuth: AngularFireAuth
+    ) { }
 
   ngOnInit() {
-    this.loaded=false;
+    this.resetPagina();
     this.cargarPublicacion(this.route.snapshot.params['uid']);
   }
 
   ionViewWillEnter(){
+  }
+
+  resetPagina(){
+    this.loaded=false;
+    this.creadorPublicacion=false;
+    this.usuarioAdmin=false;
+    this.usuarioMod=false;
   }
 
   backButton(){
@@ -40,7 +53,8 @@ export class PublicacionPage implements OnInit {
     this.publicacionService.getPublicacion(uidPublicacion).subscribe((infoPublicacion) => {
       this.rellenarDatosPublicacion(infoPublicacion.data());
       this.cargarUsuario(this.publicacionModel.usuario);
-    })
+      this.comprobarCreadorPublicacion(this.publicacionModel.usuario);
+    });
   }
 
   rellenarDatosPublicacion(infoPublicacion: any){
@@ -64,6 +78,27 @@ export class PublicacionPage implements OnInit {
     this.usuarioModel.especialidad = infoUsuario.especialidad;
     this.loaded=true;
 
+  }
+
+  comprobarCreadorPublicacion(uidUsuarioPublicacion: any){
+    this.afAuth.onAuthStateChanged((currentUser)=>{
+      if(!currentUser){ return; }
+      this.usuarioService.getUsuario(currentUser?.uid).subscribe((infoUsuario) => {
+
+        if(infoUsuario.data()?.uid===uidUsuarioPublicacion){
+          this.creadorPublicacion=true;
+        }
+
+        if(infoUsuario.data()?.tipo==='ADMIN'){
+          this.usuarioAdmin=true;
+        }
+
+        if(infoUsuario.data()?.tipo==='MOD'){
+          this.usuarioMod=true;
+        }
+
+      })
+    })
   }
 
 }
