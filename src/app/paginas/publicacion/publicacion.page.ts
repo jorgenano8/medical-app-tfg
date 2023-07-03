@@ -4,6 +4,7 @@ import { Publicacion } from 'src/app/core/modelos/publicacion.model';
 import { Usuario } from 'src/app/core/modelos/usuario.model';
 import { PublicacionService } from 'src/app/core/servicios/publicacion.service';
 import { UsuarioService } from 'src/app/core/servicios/usuario.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-publicacion',
@@ -20,15 +21,19 @@ export class PublicacionPage implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private publicacionService: PublicacionService,
-    private usuarioService: UsuarioService) { }
+    private usuarioService: UsuarioService,
+    private location: Location) { }
 
   ngOnInit() {
-    console.log("ngOnInit")
     this.loaded=false;
     this.cargarPublicacion(this.route.snapshot.params['uid']);
   }
 
   ionViewWillEnter(){
+  }
+
+  backButton(){
+    this.location.back();
   }
 
   cargarPublicacion(uidPublicacion: String){

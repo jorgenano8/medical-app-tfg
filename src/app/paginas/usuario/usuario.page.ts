@@ -7,6 +7,7 @@ import { Usuario } from 'src/app/core/modelos/usuario.model';
 import { PublicacionService } from 'src/app/core/servicios/publicacion.service';
 import { UsuarioService } from 'src/app/core/servicios/usuario.service';
 import { register } from 'swiper/element/bundle';
+import { Location } from '@angular/common';
 register();
 
 @Component({
@@ -35,6 +36,7 @@ export class UsuarioPage implements OnInit {
     private usuarioService: UsuarioService,
     private afAuth: AngularFireAuth,
     private router: Router,
+    private location: Location,
     private firestore: AngularFirestore
     ) { }
 
@@ -55,6 +57,10 @@ export class UsuarioPage implements OnInit {
     this.terminoBusqueda='';
     this.loaded=false;
     this.existenPublicaciones=false;
+  }
+
+  backButton(){
+    this.location.back();
   }
 
   comprobarUsuario(uidUsuarioPagina:String){

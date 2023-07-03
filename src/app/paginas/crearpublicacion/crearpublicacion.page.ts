@@ -9,6 +9,8 @@ import { Usuario } from 'src/app/core/modelos/usuario.model';
 import { EtiquetaService } from 'src/app/core/servicios/etiqueta.service';
 import { PublicacionService } from 'src/app/core/servicios/publicacion.service';
 import { UsuarioService } from 'src/app/core/servicios/usuario.service';
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-crearpublicacion',
@@ -29,6 +31,7 @@ export class CrearPublicacionPage implements OnInit {
     private publicacionService: PublicacionService,
     private etiquetaService: EtiquetaService,
     private router: Router,
+    private location: Location,
     private alertController: AlertController) {
       this.formGroup = this.formBuilder.group({
         titulo: ['', [Validators.required, Validators.maxLength(70)]],
@@ -48,6 +51,10 @@ export class CrearPublicacionPage implements OnInit {
 
   ionViewWillLeave(){
     this.formGroup.reset();
+  }
+
+  cancelButton(){
+    this.location.back();
   }
 
   publicarPublicacion(){
@@ -79,7 +86,8 @@ export class CrearPublicacionPage implements OnInit {
       docRef.set(infoPublicacion);
     }).then(()=>{
       this.loading = false;
-      this.router.navigateByUrl('/home/publicacion/'+ infoPublicacion.uid);
+    }).then(()=>{
+      this.router.navigateByUrl('/home/inicio');
     }).catch(()=>{
       this.loading = false;
       this.alertaPublicaciónIncorrecto();

@@ -1,7 +1,7 @@
 <ion-header class="ion-no-border">
     <ion-toolbar>
         <ion-buttons slot="secondary">
-            <ion-button color="danger" fill="clear" [disabled]="loading">Cancelar</ion-button>
+            <ion-button color="danger" fill="clear" [disabled]="loading" (click)="cancelButton()">Cancelar</ion-button>
         </ion-buttons>
         <ion-buttons slot="primary">
             <ion-button type="submit" fill="solid" (click)="publicarPublicacion()" [disabled]="!formGroup.valid || loading">
