@@ -37,7 +37,7 @@
             <ng-container *ngIf="creadorPublicacion || usuarioAdmin || usuarioMod">
                 <ion-item lines="none">
                     <ion-buttons slot="end">
-                        <ion-button>
+                        <ion-button (click)="eliminarPublicacion()">
                             <ion-icon slot="icon-only" color="danger" name="trash-outline"></ion-icon>
                         </ion-button>
                         <ion-button>

@@ -6,6 +6,7 @@ import { PublicacionService } from 'src/app/core/servicios/publicacion.service';
 import { UsuarioService } from 'src/app/core/servicios/usuario.service';
 import { Location } from '@angular/common';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-publicacion',
@@ -21,13 +22,15 @@ export class PublicacionPage implements OnInit {
   public creadorPublicacion = false;
   public usuarioAdmin = false;
   public usuarioMod = false;
+  public userUIDlogged: any;
 
   constructor(
     private route: ActivatedRoute,
     private publicacionService: PublicacionService,
     private usuarioService: UsuarioService,
     private location: Location,
-    private afAuth: AngularFireAuth
+    private afAuth: AngularFireAuth,
+    private alertController: AlertController
     ) { }
 
   ngOnInit() {
@@ -58,6 +61,7 @@ export class PublicacionPage implements OnInit {
   }
 
   rellenarDatosPublicacion(infoPublicacion: any){
+    this.publicacionModel.uid = infoPublicacion.uid;
     this.publicacionModel.usuario = infoPublicacion.usuario;
     this.publicacionModel.fechaPublicacion = infoPublicacion.fechaPublicacion;
     this.publicacionModel.etiqueta = infoPublicacion.etiqueta;
@@ -83,7 +87,8 @@ export class PublicacionPage implements OnInit {
   comprobarCreadorPublicacion(uidUsuarioPublicacion: any){
     this.afAuth.onAuthStateChanged((currentUser)=>{
       if(!currentUser){ return; }
-      this.usuarioService.getUsuario(currentUser?.uid).subscribe((infoUsuario) => {
+      this.userUIDlogged=currentUser?.uid;
+      this.usuarioService.getUsuario(this.userUIDlogged).subscribe((infoUsuario) => {
 
         if(infoUsuario.data()?.uid===uidUsuarioPublicacion){
           this.creadorPublicacion=true;
@@ -99,6 +104,47 @@ export class PublicacionPage implements OnInit {
 
       })
     })
+  }
+
+
+
+  eliminarPublicacion(){
+    this.afAuth.onAuthStateChanged((currentUser)=>{
+      if(!currentUser){ return; }
+      this.userUIDlogged=currentUser?.uid;
+      this.usuarioService.getUsuario(this.userUIDlogged).subscribe((infoUsuario) => {
+
+        if(infoUsuario.data()?.uid===this.publicacionModel.usuario || infoUsuario.data()?.tipo==='ADMIN' || infoUsuario.data()?.tipo==='MOD'){
+          this.publicacionService.deletePublicacion(this.publicacionModel.uid);
+        }
+
+      })
+    }).then(()=>{
+      this.alertaOKEliminarPublicacion();
+      this.location.back();
+    }).catch(()=>{
+      this.alertaErrorEliminarPublicacion();
+    })
+  }
+
+  async alertaOKEliminarPublicacion() {
+    const alert = await this.alertController.create({
+      header: 'Publicación eliminada',
+      message: 'La publicación ha podido ser eliminada.',
+      buttons: ['OK']
+    });
+
+    alert.present();
+  }
+
+  async alertaErrorEliminarPublicacion() {
+    const alert = await this.alertController.create({
+      header: '¡Ups',
+      message: 'Parece que algo ha fallado. Vuelva a intentarlo más tarde.',
+      buttons: ['OK']
+    });
+
+    alert.present();
   }
 
 }
