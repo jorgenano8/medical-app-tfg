@@ -29,7 +29,6 @@ const routes: Routes = [
     canActivate: [Noauthguard],
     loadChildren: () => import('./auth/nuevacontrasenya/nuevacontrasenya.module').then( m => m.NuevacontrasenyaPageModule)
   }
-
 ];
 @NgModule({
   imports: [

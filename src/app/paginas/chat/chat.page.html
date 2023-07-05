@@ -1,0 +1,28 @@
+<ion-header>
+    <ion-toolbar color="light">
+        <ion-buttons slot="start">
+            <ion-back-button text="" default-href="#"></ion-back-button>
+        </ion-buttons>
+        <ion-progress-bar *ngIf="!loaded" type="indeterminate"></ion-progress-bar>
+        <ion-buttons slot="secondary">
+            <ion-button [routerLink]="['/home/perfil']">
+                <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <form [formGroup]="formGroup" (ngSubmit)="enviarMensaje()">
+        <ion-input placeholder="Escribe un mensaje" type="text" formControlName="mensaje"></ion-input>
+        <ion-buttons>
+            <ion-button [disabled]="!formGroup.valid" (click)="enviarMensaje()">
+                <ion-icon slot="icon-only" name="send-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </form>
+
+
+
+</ion-content>

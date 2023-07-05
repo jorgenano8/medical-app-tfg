@@ -45,6 +45,10 @@ const routes: Routes = [
         loadChildren: () => import('../paginas/mensajes/mensajes.module').then( m => m.MensajesPageModule)
       },
       {
+        path: 'mensajes/chat/:uid',
+        loadChildren: () => import('../paginas/chat/chat.module').then( m => m.ChatPageModule)
+      },
+      {
         path: 'notificaciones',
         canActivate: [AuthGuard],
         loadChildren: () => import('../paginas/notificaciones/notificaciones.module').then( m => m.NotificacionesPageModule)

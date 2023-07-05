@@ -1,9 +1,15 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>mensajes</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title>Mensajes</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
+    <ion-button (click)="crearChat()">Crear chat</ion-button>
 
+    <ion-list *ngIf="listaChats.length>0">
+        <ion-item *ngFor="let chat of listaChats" [routerLink]="['/home/mensajes/chat', chat.uid]" lines="full">
+            <h3>{{chat.uid}}</h3>
+        </ion-item>
+    </ion-list>
 </ion-content>
