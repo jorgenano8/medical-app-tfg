@@ -38,7 +38,7 @@
 
         <ion-item class="ion-no-padding" lines="none">
             <ion-label>Aviso legal y política de privacidad</ion-label>
-            <ion-checkbox slot="start"></ion-checkbox>
+            <ion-checkbox slot="start" formControlName="terminos"></ion-checkbox>
         </ion-item>
 
         <ion-button class="buttonRegistroForm" type="submit" expand="block" [disabled]="!formGroup.valid || loading">

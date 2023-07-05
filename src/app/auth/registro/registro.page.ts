@@ -30,7 +30,8 @@ export class RegistroPage implements OnInit {
       dni: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       contraseña: ['', [Validators.required],],
-      contraseña2: ['', [Validators.required]]
+      contraseña2: ['', [Validators.required]],
+      terminos: [false, Validators.requiredTrue]
     }, {validator: this.compararContraseñas}
   )};
 
@@ -47,7 +48,7 @@ export class RegistroPage implements OnInit {
 
   onSubmit() {
 
-    if (!this.formGroup.valid) { return; }
+    if (!this.formGroup.valid || !this.terminosAceptados()) { return; }
 
     this.loading = true;
 
@@ -79,6 +80,10 @@ export class RegistroPage implements OnInit {
       this.loading = false;
       this.alertaRegistroIncorrecto();
     });
+  }
+
+  terminosAceptados(): boolean{
+    return this.formGroup.value.terminos;
   }
 
   async alertaRegistroCorrecto() {
