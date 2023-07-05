@@ -62,8 +62,8 @@ export class InicioPage implements OnInit {
         })
 
         this.publicacionService.getPublicaciones().ref.where('usuario', 'in', this.uidUsuarios).orderBy('dateSystem', 'desc').get().then((publicaciones)=>{
-          this.existenPublicaciones=true;
           publicaciones.forEach(publicacion=>{
+            this.existenPublicaciones=true;
             this.listaPublicaciones.push(publicacion.data());
           })
         }).then(()=>{
