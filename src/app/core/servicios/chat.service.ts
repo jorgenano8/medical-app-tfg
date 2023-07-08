@@ -3,6 +3,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/comp
 import { FieldValue, arrayUnion, doc, updateDoc, } from 'firebase/firestore';
 import { Chat } from '../modelos/chat.model';
 import { Mensaje } from '../modelos/mensaje.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -31,8 +32,8 @@ export class ChatService {
     return this.chatCollection.doc().ref;
   }
 
-  async newMensajeToChat(chatUID: string, mensaje: Mensaje){
-    updateDoc(doc(this.firestore.firestore, this.path + chatUID), {
+  async newMensajeToChat(chatUID: any, mensaje: Mensaje){
+    updateDoc(doc(this.firestore.firestore, this.path + '/' + chatUID), {
       mensajes: arrayUnion(mensaje)
     })
   }

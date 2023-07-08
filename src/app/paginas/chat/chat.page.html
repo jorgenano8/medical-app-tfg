@@ -25,12 +25,11 @@
     </ion-list>
 
     <form [formGroup]="formGroup" (ngSubmit)="enviarMensaje()">
-        <ion-input placeholder="Escribe un mensaje" type="text" formControlName="mensaje"></ion-input>
+        <ion-input placeholder="Escribe un mensaje" type="text" formControlName="contenido"></ion-input>
         <ion-buttons>
             <ion-button [disabled]="!formGroup.valid" (click)="enviarMensaje()">
                 <ion-icon slot="icon-only" name="send-outline"></ion-icon>
             </ion-button>
         </ion-buttons>
     </form>
-
 </ion-content>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Chat } from 'src/app/core/modelos/chat.model';
 import { Mensaje } from 'src/app/core/modelos/mensaje.model';
 import { Usuario } from 'src/app/core/modelos/usuario.model';
@@ -19,6 +20,7 @@ export class ChatPage implements OnInit {
   public formGroup: FormGroup;
   public loaded:Boolean =false;
   public uidUsuario:any;
+  public uidUsuarioLogged:any;
   public usuarioModel:Usuario={};
   public chatModel:Chat={};
   public listaMensajes:Mensaje[]=[];
@@ -33,7 +35,7 @@ export class ChatPage implements OnInit {
   ) {
     this.uidChat=this.route.snapshot.params['uid'];
     this.formGroup = this.formBuilder.group({
-      mensaje: ['', [Validators.required]]
+      contenido: ['', [Validators.required]]
     });
    }
 
@@ -45,6 +47,7 @@ export class ChatPage implements OnInit {
   }
 
   async cargarChat(uidChat: string){
+    this.listaMensajes=[];
     this.chatService.getChat(uidChat).subscribe((infoChat)=>{
       if(infoChat){
         this.rellenarInfoChat(infoChat.data());
@@ -56,6 +59,7 @@ export class ChatPage implements OnInit {
     this.afAuth.authState.subscribe((user) => {
       if(user){
         this.usuarioService.getUsuario(user.uid).subscribe((infoUsuario)=>{
+          this.uidUsuarioLogged=infoUsuario.data()?.uid;
           if(infoUsuario.data()?.uid==this.chatModel.usuario1){
             this.usuarioService.getUsuario(this.chatModel.usuario2).subscribe((infoUsuario)=>{
               this.rellenarInfoUsuario(infoUsuario.data());
@@ -89,8 +93,20 @@ export class ChatPage implements OnInit {
 
 
   enviarMensaje(){
-    console.log('enviar')
+    if (!this.formGroup.valid) { return; }
 
+    const { contenido } = this.formGroup.value;
+
+    const mensaje: Mensaje={
+      remitente: this.uidUsuarioLogged,
+      fecha: new Date().toLocaleString(),
+      contenido: contenido
+    }
+
+    this.chatService.newMensajeToChat(this.uidChat, mensaje).then(()=>{
+      this.formGroup.reset();
+      this.cargarChat(this.uidChat);
+    })
   }
 
 }
