@@ -19,17 +19,18 @@
 <ion-content>
 
     <ion-list>
-        <ion-item *ngFor="let mensaje of listaMensajes">
+        <ion-item lines="none" *ngFor="let mensaje of listaMensajes">
             <p>{{mensaje.contenido}}</p>
         </ion-item>
     </ion-list>
 
-    <form [formGroup]="formGroup" (ngSubmit)="enviarMensaje()">
-        <ion-input placeholder="Escribe un mensaje" type="text" formControlName="contenido"></ion-input>
-        <ion-buttons>
-            <ion-button [disabled]="!formGroup.valid" (click)="enviarMensaje()">
-                <ion-icon slot="icon-only" name="send-outline"></ion-icon>
-            </ion-button>
-        </ion-buttons>
-    </form>
+    <div class="bottom ion-padding" keyboard-attach lines="none">
+        <form [formGroup]="formGroup">
+            <ion-input placeholder="Escribe un mensaje" type="text" formControlName="contenido"></ion-input>
+        </form>
+        <ion-button fill="clear" [disabled]="!formGroup.valid" (click)="enviarMensaje()">
+            <ion-icon slot="icon-only" name="send-outline"></ion-icon>
+        </ion-button>
+    </div>
+
 </ion-content>
