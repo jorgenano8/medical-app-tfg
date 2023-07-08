@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Chat } from 'src/app/core/modelos/chat.model';
 import { ChatService } from 'src/app/core/servicios/chat.service';
+import { UsuarioService } from 'src/app/core/servicios/usuario.service';
 
 @Component({
   selector: 'app-mensajes',
@@ -10,15 +12,24 @@ import { ChatService } from 'src/app/core/servicios/chat.service';
 export class MensajesPage implements OnInit {
 
   public listaChats: Chat[]=[];
+  public userUIDLogged:any;
 
-  constructor(private chatService: ChatService) { }
+  constructor(
+    private chatService: ChatService,
+    private usuarioService: UsuarioService,
+    private afAuth: AngularFireAuth
+    ) { }
 
   ngOnInit() {
   }
 
   ionViewWillEnter(){
     this.resetPagina();
-    this.cargarChats();
+    this.afAuth.authState.subscribe((user) => {
+      if(user){
+        this.cargarChats(user.uid);
+      }
+    });
   }
 
   ionViewWillLeave(){
@@ -27,22 +38,21 @@ export class MensajesPage implements OnInit {
 
   resetPagina(){
     this.listaChats=[];
+    this.userUIDLogged='';
   }
 
-  cargarChats(){
-    this.chatService.getMensajes().ref.where("usuario1", "==", "jorge").get().then((listaUsuario1)=>{
+  cargarChats(uid:any){
+    this.chatService.getChats().ref.where("usuario1", "==", uid).get().then((listaUsuario1)=>{
       listaUsuario1.forEach(chatUsuario1=>{
         this.listaChats.push(chatUsuario1.data())
       })
     }).then(()=>{
-      this.chatService.getMensajes().ref.where("usuario2", "==", "jorge").get().then((listaUsuario1)=>{
+      this.chatService.getChats().ref.where("usuario2", "==", uid).get().then((listaUsuario1)=>{
         listaUsuario1.forEach(chatUsuario1=>{
           this.listaChats.push(chatUsuario1.data())
         })
+      })
     })
-  })
-  console.log(this.listaChats)
-
   }
 
   crearChat(){

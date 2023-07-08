@@ -15,11 +15,11 @@ export class ChatService {
     this.chatCollection=firestore.collection(this.path);
   }
 
-  getMensajes(): AngularFirestoreCollection<Chat> {
+  getChats(): AngularFirestoreCollection<Chat> {
     return this.chatCollection;
   }
 
-  getMensaje(uid: any){
+  getChat(uid: any){
     return this.chatCollection.doc(uid).get();
   }
 
