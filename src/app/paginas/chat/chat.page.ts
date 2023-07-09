@@ -80,9 +80,11 @@ export class ChatPage implements OnInit {
     this.chatModel.uid=infoChat.uid;
     this.chatModel.usuario1=infoChat.usuario1;
     this.chatModel.usuario2=infoChat.usuario2;
-    infoChat.mensajes.forEach((mensaje: Mensaje)=>{
-      this.listaMensajes.push(mensaje);
-    })
+    if(infoChat.mensajes){
+      infoChat.mensajes.forEach((mensaje: Mensaje)=>{
+        this.listaMensajes.push(mensaje);
+      })
+    }
   }
 
   rellenarInfoUsuario(infoUsuario:any){

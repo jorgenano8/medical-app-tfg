@@ -8,6 +8,8 @@ import { PublicacionService } from 'src/app/core/servicios/publicacion.service';
 import { UsuarioService } from 'src/app/core/servicios/usuario.service';
 import { register } from 'swiper/element/bundle';
 import { Location } from '@angular/common';
+import { Chat } from 'src/app/core/modelos/chat.model';
+import { ChatService } from 'src/app/core/servicios/chat.service';
 register();
 
 @Component({
@@ -37,7 +39,7 @@ export class UsuarioPage implements OnInit {
     private afAuth: AngularFireAuth,
     private router: Router,
     private location: Location,
-    private firestore: AngularFirestore
+    private chatService: ChatService
     ) { }
 
   ngOnInit() {
@@ -128,6 +130,7 @@ export class UsuarioPage implements OnInit {
     this.usuarioModel.colegiado = infoUsuario.colegiado;
     this.usuarioModel.descripcion = infoUsuario.descripcion;
     this.usuarioModel.especialidad = infoUsuario.especialidad;
+    this.usuarioModel.seguidos = infoUsuario.seguidos;
   }
 
   seguirUsuario(){
@@ -135,6 +138,10 @@ export class UsuarioPage implements OnInit {
     this.usuarioService.updateUsuarioSeguir(this.userUIDlogged, this.route.snapshot.params['uid']).then(()=>{
       this.usuarioService.updateUsuarioNuevoSeguidor(this.userUIDlogged, this.route.snapshot.params['uid']);
       this.siguiendo=true;
+    }).then(()=>{
+      if(this.usuarioModel.seguidos?.includes(this.userUIDlogged)){
+        this.crearChat();
+      }
     }).catch((error)=>{
       console.log(error.message);
     });
@@ -158,6 +165,41 @@ export class UsuarioPage implements OnInit {
       listaUsuariosBusqueda.forEach(usuario=>{
         this.listaBusquedaUsuarios.push(usuario.data());
       })
+    }).catch((error)=>{
+      console.log(error.message);
+    })
+  }
+
+  crearChat(){
+    let chatExiste=false;
+
+    this.chatService.getChats().ref.where("usuario1", "==", this.userUIDlogged).get().then((listaChats)=>{
+      listaChats.forEach(chat=>{
+        if(chat.data().usuario2===this.route.snapshot.params['uid']){
+          chatExiste=true;
+        }
+      })
+    }).then(()=>{
+      this.chatService.getChats().ref.where("usuario2", "==", this.userUIDlogged).get().then((listaChats)=>{
+        listaChats.forEach(chat=>{
+          if(chat.data().usuario1===this.route.snapshot.params['uid']){
+            chatExiste=true;
+          }
+        })
+      })
+    }).then(()=>{
+      if(!chatExiste){
+
+        const infoNuevoChat:Chat={
+          usuario1: this.userUIDlogged,
+          usuario2: this.route.snapshot.params['uid']
+        };
+
+        this.chatService.newChatVacio().then((refDoc)=>{
+          infoNuevoChat.uid=refDoc.id;
+          refDoc.set(infoNuevoChat);
+        })
+      }
     }).catch((error)=>{
       console.log(error.message);
     })
