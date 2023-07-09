@@ -59,19 +59,7 @@ export class MensajesPage implements OnInit {
         })
       })
     }).then(()=>{
-      this.listaChats.forEach(chat=>{
-        if(chat.usuario1==this.userUIDLogged){
-          this.usuarioService.getUsuario(chat.usuario2).subscribe((user)=>{
-            this.listaReceptores.push(user.data());
-          })
-        }
-        if(chat.usuario2==this.userUIDLogged){
-          this.usuarioService.getUsuario(chat.usuario1).subscribe((user)=>{
-            this.listaReceptores.push(user.data());
-          })
-        }
-      })
-      this.loaded=true;
+        this.cargarReceptores()
     }).catch((error)=>{
       console.log(error.message);
     });
@@ -89,6 +77,22 @@ export class MensajesPage implements OnInit {
       refDoc.set(infoPublicacion);
     })
 
+  }
+
+  cargarReceptores(){
+    this.listaChats.forEach(chat=>{
+      if(chat.usuario1==this.userUIDLogged){
+        this.usuarioService.getUsuario(chat.usuario2).subscribe((user)=>{
+          this.listaReceptores.push(user.data());
+        })
+      }
+      if(chat.usuario2==this.userUIDLogged){
+        this.usuarioService.getUsuario(chat.usuario1).subscribe((user)=>{
+          this.listaReceptores.push(user.data());
+        })
+      }
+    })
+    this.loaded=true;
   }
 
 
