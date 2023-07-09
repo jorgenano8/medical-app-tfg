@@ -85,8 +85,7 @@ export class MensajesPage implements OnInit {
         this.usuarioService.getUsuario(chat.usuario2).subscribe((user)=>{
           this.listaReceptores.push(user.data());
         })
-      }
-      if(chat.usuario2==this.userUIDLogged){
+      }else{
         this.usuarioService.getUsuario(chat.usuario1).subscribe((user)=>{
           this.listaReceptores.push(user.data());
         })

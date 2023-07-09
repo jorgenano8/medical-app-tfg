@@ -20,11 +20,11 @@
 
     <ion-list>
         <ion-item lines="none" *ngFor="let mensaje of listaMensajes">
-            <p>{{mensaje.contenido}}</p>
+            <label>{{mensaje.contenido}}</label>
         </ion-item>
     </ion-list>
 
-    <div class="bottom ion-padding" keyboard-attach lines="none">
+    <div class="bottom ion-padding" keyboard-attach>
         <form [formGroup]="formGroup">
             <ion-input placeholder="Escribe un mensaje" type="text" formControlName="contenido"></ion-input>
         </form>

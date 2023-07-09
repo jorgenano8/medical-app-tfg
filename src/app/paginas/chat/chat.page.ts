@@ -40,10 +40,10 @@ export class ChatPage implements OnInit {
    }
 
   ngOnInit() {
+    this.loaded=false;
     this.cargarChat(this.uidChat).then(()=>{
       this.cargarUsuario();
     })
-    //this.loaded=true;
   }
 
   async cargarChat(uidChat: string){
@@ -72,6 +72,7 @@ export class ChatPage implements OnInit {
         })
       }
     });
+    this.loaded=true;
   }
 
 
