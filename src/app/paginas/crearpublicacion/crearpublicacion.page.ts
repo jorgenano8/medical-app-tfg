@@ -10,6 +10,7 @@ import { EtiquetaService } from 'src/app/core/servicios/etiqueta.service';
 import { PublicacionService } from 'src/app/core/servicios/publicacion.service';
 import { UsuarioService } from 'src/app/core/servicios/usuario.service';
 import { Location } from '@angular/common';
+import { NotificacionService } from 'src/app/core/servicios/notificacion.service';
 
 
 @Component({
@@ -30,6 +31,7 @@ export class CrearPublicacionPage implements OnInit {
     private usuarioService: UsuarioService,
     private publicacionService: PublicacionService,
     private etiquetaService: EtiquetaService,
+    private notificacionService: NotificacionService,
     private router: Router,
     private location: Location,
     private alertController: AlertController) {
@@ -87,6 +89,12 @@ export class CrearPublicacionPage implements OnInit {
     }).then(()=>{
       this.loading = false;
     }).then(()=>{
+      if(this.usuarioModel.seguidores){
+        this.usuarioModel.seguidores.forEach(seguidor=>{
+          this.notificacionService.newNotificacionPublicacion(this.usuarioModel, seguidor)
+        })
+      }
+    }).then(()=>{
       this.router.navigateByUrl('/home/inicio');
     }).catch(()=>{
       this.loading = false;
@@ -110,6 +118,7 @@ export class CrearPublicacionPage implements OnInit {
     this.usuarioModel.apellidos = infoUsuario.apellidos;
     this.usuarioModel.uid = infoUsuario.uid;
     this.usuarioModel.especialidad = infoUsuario.especialidad;
+    this.usuarioModel.seguidores = infoUsuario.seguidores;
   }
 
   cargarEtiquetas(){
