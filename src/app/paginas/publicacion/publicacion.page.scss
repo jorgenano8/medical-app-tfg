@@ -14,3 +14,22 @@ p {
     // text-align: justify;
     color: #666666;
 }
+
+.publicarComentario {
+    //position: absolute;
+    display: flex;
+    //bottom: 0px;
+    width: 100%;
+}
+
+.publicarComentario form {
+    // height: fit-content;
+    width: 85%;
+    border-style: solid;
+    border-width: medium;
+    border-color: lightgray;
+}
+
+.publicarComentario ion-button {
+    width: 15%;
+}

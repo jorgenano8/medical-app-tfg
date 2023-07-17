@@ -7,6 +7,8 @@ import { UsuarioService } from 'src/app/core/servicios/usuario.service';
 import { Location } from '@angular/common';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AlertController } from '@ionic/angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Comentario } from 'src/app/core/modelos/comentario.model';
 
 @Component({
   selector: 'app-publicacion',
@@ -17,12 +19,18 @@ export class PublicacionPage implements OnInit {
 
   public publicacionModel: Publicacion={};
   public usuarioModel: Usuario={};
+  public listaComentarios: Comentario[]=[];
 
   public loaded = false;
   public creadorPublicacion = false;
   public usuarioAdmin = false;
   public usuarioMod = false;
   public userUIDlogged: any;
+  public userNombreLogged: any;
+  public userApellidosLogged: any;
+  public uidPublicacion: any;
+
+  public formGroup: FormGroup
 
   constructor(
     private route: ActivatedRoute,
@@ -30,15 +38,22 @@ export class PublicacionPage implements OnInit {
     private usuarioService: UsuarioService,
     private location: Location,
     private afAuth: AngularFireAuth,
-    private alertController: AlertController
-    ) { }
+    private alertController: AlertController,
+    private formBuilder: FormBuilder,
+    ) {
+    this.uidPublicacion=this.route.snapshot.params['uid'];
+      this.formGroup = this.formBuilder.group({
+        contenido: ['', [Validators.required]]
+      });
+     }
 
   ngOnInit() {
-    this.resetPagina();
-    this.cargarPublicacion(this.route.snapshot.params['uid']);
+
   }
 
   ionViewWillEnter(){
+    this.resetPagina();
+    this.cargarPublicacion(this.uidPublicacion);
   }
 
   resetPagina(){
@@ -46,6 +61,7 @@ export class PublicacionPage implements OnInit {
     this.creadorPublicacion=false;
     this.usuarioAdmin=false;
     this.usuarioMod=false;
+    this.listaComentarios=[];
   }
 
   backButton(){
@@ -67,6 +83,13 @@ export class PublicacionPage implements OnInit {
     this.publicacionModel.etiqueta = infoPublicacion.etiqueta;
     this.publicacionModel.titulo = infoPublicacion.titulo;
     this.publicacionModel.contenido = infoPublicacion.contenido;
+
+    if(infoPublicacion.comentarios){
+      infoPublicacion.comentarios.forEach((comentario:Comentario)=>{
+        this.listaComentarios.push(comentario);
+      })
+    }
+
   }
 
   cargarUsuario(uidUsuario: any){
@@ -89,6 +112,8 @@ export class PublicacionPage implements OnInit {
       if(!currentUser){ return; }
       this.userUIDlogged=currentUser?.uid;
       this.usuarioService.getUsuario(this.userUIDlogged).subscribe((infoUsuario) => {
+        this.userNombreLogged=infoUsuario.data()?.nombre;
+        this.userApellidosLogged=infoUsuario.data()?.apellidos;
 
         if(infoUsuario.data()?.uid===uidUsuarioPublicacion){
           this.creadorPublicacion=true;
@@ -145,6 +170,26 @@ export class PublicacionPage implements OnInit {
     });
 
     alert.present();
+  }
+
+  enviarComentario(){
+    if (!this.formGroup.valid) { return; }
+
+    const { contenido } = this.formGroup.value;
+
+    const comentario: Comentario={
+      contenido: contenido,
+      usuario: this.userUIDlogged,
+      nombre:this.userNombreLogged,
+      apellidos:this.userApellidosLogged,
+      fecha: new Date().toLocaleString(),
+      dateSystem: new Date(),
+
+    }
+
+    this.publicacionService.newComentarioToPublicacion(this.uidPublicacion, comentario).then(()=>{
+      this.formGroup.reset();
+    })
   }
 
 }

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
+import { FieldValue, arrayUnion, doc, updateDoc, } from 'firebase/firestore';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { Publicacion } from '../modelos/publicacion.model';
+import { Comentario } from '../modelos/comentario.model';
 
 
 @Injectable({
@@ -36,6 +38,12 @@ export class PublicacionService {
 
   async deletePublicacion(uid: any){
     return await this.publicacionCollection.doc(uid).delete();
+  }
+
+  async newComentarioToPublicacion(publicacionUID: any, comentario: Comentario){
+    updateDoc(doc(this.firestore.firestore, this.path + '/' + publicacionUID), {
+      comentarios: arrayUnion(comentario)
+    })
   }
 
 }
