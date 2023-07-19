@@ -18,6 +18,9 @@ export class RegistroPage implements OnInit {
   public listaEspecialidades: string[] = ["Médico", "Farmacéutico", "Dentista", "Veterinario", "Psicólogo", "Enfermero",
   "Fisioterapeuta", "Podólogo", "Óptico-Optometrista", "Logopeda", "Terapeuta ocupacional"]
 
+  public dniRegex = '^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKE]$';
+  public publicRegex = '^[0-9]{9}$';
+
   constructor(private authService: AuthService,
               private formBuilder: FormBuilder,
               private usuarioService: UsuarioService,
@@ -26,8 +29,8 @@ export class RegistroPage implements OnInit {
     this.formGroup = this.formBuilder.group({
       nombre: ['', [Validators.required]],
       apellidos: ['', [Validators.required]],
-      colegiado: ['', [Validators.required]],
-      dni: ['', [Validators.required]],
+      colegiado: ['', [Validators.required, Validators.pattern(this.publicRegex)]],
+      dni: ['', [Validators.required, Validators.pattern(this.dniRegex)]],
       email: ['', [Validators.required, Validators.email]],
       contraseña: ['', [Validators.required],],
       contraseña2: ['', [Validators.required]],
@@ -36,6 +39,10 @@ export class RegistroPage implements OnInit {
   )};
 
   ngOnInit() {
+  }
+
+  ionViewWillLeave(){
+    this.formGroup.reset();
   }
 
   compararContraseñas(formGroup: FormGroup) {

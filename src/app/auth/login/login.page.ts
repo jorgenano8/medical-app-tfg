@@ -28,6 +28,10 @@ export class LoginPage implements OnInit {
   ngOnInit() {
   }
 
+  ionViewWillLeave(){
+    this.formGroup.reset();
+  }
+
   onSubmit() {
     if (!this.formGroup.valid) { return; }
 

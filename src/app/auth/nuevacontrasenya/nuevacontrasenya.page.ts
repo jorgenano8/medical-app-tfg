@@ -26,6 +26,10 @@ export class NuevacontrasenyaPage implements OnInit {
     this.loading=false;
   }
 
+  ionViewWillLeave(){
+    this.formGroup.reset();
+  }
+
   onSubmit(){
 
     if (!this.formGroup.valid) { return; }
