@@ -22,6 +22,7 @@ export class PublicacionPage implements OnInit {
   public listaComentarios: Comentario[]=[];
 
   public loaded = false;
+  public mostrarComentarios = true;
   public creadorPublicacion = false;
   public usuarioAdmin = false;
   public usuarioMod = false;
@@ -53,11 +54,12 @@ export class PublicacionPage implements OnInit {
 
   ionViewWillEnter(){
     this.resetPagina();
-    this.cargarPublicacion(this.uidPublicacion);
+    this.cargarPublicacion();
   }
 
   resetPagina(){
     this.loaded=false;
+    this.mostrarComentarios=true;
     this.creadorPublicacion=false;
     this.usuarioAdmin=false;
     this.usuarioMod=false;
@@ -68,8 +70,8 @@ export class PublicacionPage implements OnInit {
     this.location.back();
   }
 
-  cargarPublicacion(uidPublicacion: String){
-    this.publicacionService.getPublicacion(uidPublicacion).subscribe((infoPublicacion) => {
+  cargarPublicacion(){
+    this.publicacionService.getPublicacion(this.uidPublicacion).subscribe((infoPublicacion) => {
       this.rellenarDatosPublicacion(infoPublicacion.data());
       this.cargarUsuario(this.publicacionModel.usuario);
       this.comprobarCreadorPublicacion(this.publicacionModel.usuario);
@@ -88,6 +90,7 @@ export class PublicacionPage implements OnInit {
       infoPublicacion.comentarios.forEach((comentario:Comentario)=>{
         this.listaComentarios.push(comentario);
       })
+      this.listaComentarios.reverse();
     }
 
   }
@@ -173,6 +176,8 @@ export class PublicacionPage implements OnInit {
   }
 
   enviarComentario(){
+    this.mostrarComentarios=false;
+
     if (!this.formGroup.valid) { return; }
 
     const { contenido } = this.formGroup.value;
@@ -189,7 +194,21 @@ export class PublicacionPage implements OnInit {
 
     this.publicacionService.newComentarioToPublicacion(this.uidPublicacion, comentario).then(()=>{
       this.formGroup.reset();
+      this.cargarComentariosAfterComentar();
     })
+  }
+
+  cargarComentariosAfterComentar(){
+    this.publicacionService.getPublicacion(this.uidPublicacion).subscribe((infoPublicacion: any) => {
+      if(infoPublicacion.data().comentarios){
+        this.listaComentarios=[];
+        infoPublicacion.data().comentarios.forEach((comentario:Comentario)=>{
+          this.listaComentarios.push(comentario);
+        })
+        this.listaComentarios.reverse();
+      }
+    });
+    this.mostrarComentarios=true;
   }
 
 }

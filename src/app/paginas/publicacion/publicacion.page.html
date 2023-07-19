@@ -62,7 +62,7 @@
             </ion-button>
         </div>
 
-        <ion-list>
+        <ion-list *ngIf="mostrarComentarios">
             <ng-container *ngFor="let comentario of listaComentarios">
                 <ion-item lines="none" [routerLink]="['/home/usuario/', comentario.usuario]" detail="false">
                     <ion-avatar slot="start">

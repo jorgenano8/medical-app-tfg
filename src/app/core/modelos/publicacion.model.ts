@@ -1,3 +1,5 @@
+import { Comentario } from "./comentario.model";
+
 export class Publicacion {
 
   constructor(
@@ -11,6 +13,7 @@ export class Publicacion {
     public etiqueta?: string,
     public titulo?: string,
     public contenido?: string,
+    public comentarios?: Comentario[],
   ) {}
 
 }
