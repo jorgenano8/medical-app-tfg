@@ -1,0 +1,24 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Mensajes</ion-title>
+        <ion-progress-bar *ngIf="!loaded" type="indeterminate"></ion-progress-bar>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ng-container *ngIf="loaded">
+        <ion-list *ngIf="listaChats.length>0">
+            <ion-item *ngFor="let chat of listaChats; let i = index" [routerLink]="['/home/mensajes/chat', chat.uid]" lines="full">
+                <ion-avatar slot="start">
+                    <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+                </ion-avatar>
+                <ion-label>
+                    <h2>{{listaReceptores[i]?.nombre}} {{listaReceptores[i]?.apellidos}}</h2>
+                    <p>{{listaReceptores[i]?.especialidad}}</p>
+                </ion-label>
+            </ion-item>
+        </ion-list>
+
+        <!-- <ion-button (click)="crearChat()">Crear chat</ion-button> -->
+    </ng-container>
+</ion-content>

@@ -1,0 +1,20 @@
+<ion-content>
+    <ion-item lines="none" class="nuevaContrasenyaHeader">
+        <ion-label>
+            <h1><strong>¿Has olvidado tu<br/>contraseña?</strong></h1>
+            <p>o <a [routerLink]="['/login']">Inicia sesión</a></p>
+        </ion-label>
+    </ion-item>
+
+    <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="nuevaContrasenyaForm">
+        <ion-item class="ion-no-padding">
+            <ion-label position="floating">Correo electrónico</ion-label>
+            <ion-input placeholder="Introduce tu correo electrónico" type="email" formControlName="email" required="true"></ion-input>
+        </ion-item>
+
+        <ion-button class="buttonNuevaContrasenyaForm" type="submit" expand="block" [disabled]="!formGroup.valid || loading">
+            <ion-spinner *ngIf="loading"></ion-spinner>
+            <span *ngIf="!loading">Restablecer contraseña</span>
+        </ion-button>
+    </form>
+</ion-content>

@@ -1,0 +1,84 @@
+<ion-header>
+    <ion-toolbar color="light">
+        <ion-searchbar [(ngModel)]="terminoBusqueda" (ionChange)="buscarUsuarios()" type="text" placeholder="Búsqueda"></ion-searchbar>
+        <ion-progress-bar *ngIf="!loaded" type="indeterminate"></ion-progress-bar>
+        <ion-buttons slot="primary">
+            <ion-button [routerLink]="['/home/perfil']">
+                <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+    <ion-list *ngIf="true">
+        <ion-item *ngFor="let usuarioModel of listaBusquedaUsuarios" [routerLink]="['/home/usuario/', usuarioModel.uid]" lines="full">
+            <ion-avatar slot="start">
+                <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+            </ion-avatar>
+            <ion-label>
+                <h2>{{usuarioModel.nombre}} {{usuarioModel.apellidos}}</h2>
+                <p>{{usuarioModel.especialidad}}</p>
+            </ion-label>
+        </ion-item>
+    </ion-list>
+</ion-header>
+
+<ion-content>
+    <ng-container *ngIf="loaded && !existenPublicaciones">
+        <p class="ion-text-center ion-padding">¡Vaya! Parece que todavía no hay ninguna publicación. <a [routerLink]="['/home/crearpublicacion']">Crea una publicación</a> o empieza a seguir a otras personas a través del buscador.</p>
+        <ion-img alt="No existen publicaciones cargadas" src="assets\images\20943401.jpg"></ion-img>
+    </ng-container>
+
+    <ng-container *ngIf="loaded && existenPublicaciones">
+        <ion-card *ngFor="let publicacion of listaPublicaciones" [routerLink]="['/home/publicacion', publicacion.uid]">
+            <ion-item lines="none">
+                <ion-avatar slot="start">
+                    <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+                </ion-avatar>
+                <ion-label>
+                    <h2>{{publicacion.nombre}} {{publicacion.apellidos}}</h2>
+                    <p>{{publicacion.especialidad}}</p>
+                    <p>{{publicacion.fechaPublicacion}}</p>
+                </ion-label>
+            </ion-item>
+            <ion-card-header>
+                <ion-card-title>{{publicacion.titulo}}</ion-card-title>
+                <ion-card-subtitle>{{publicacion.etiqueta}}</ion-card-subtitle>
+            </ion-card-header>
+
+            <ion-card-content [innerHTML]="publicacion.contenido"></ion-card-content>
+        </ion-card>
+    </ng-container>
+
+    <ng-container *ngIf="!loaded">
+        <ion-card *ngFor="let number of [0, 1, 2, 3]">
+            <ion-item lines="none">
+                <ion-avatar slot="start">
+                    <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+                </ion-avatar>
+                <ion-label>
+                    <h2>
+                        <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
+                    </h2>
+                    <p>
+                        <ion-skeleton-text [animated]="true" style="width: 40%;"></ion-skeleton-text>
+                    </p>
+                    <p>
+                        <ion-skeleton-text [animated]="true" style="width: 60%;"></ion-skeleton-text>
+                    </p>
+                </ion-label>
+            </ion-item>
+            <ion-card-header>
+                <ion-card-title>
+                    <ion-skeleton-text [animated]="true" style="width: 50%;"></ion-skeleton-text>
+                </ion-card-title>
+                <ion-card-subtitle>
+                    <ion-skeleton-text [animated]="true" style="width: 30%;"></ion-skeleton-text>
+                </ion-card-subtitle>
+            </ion-card-header>
+
+            <ion-card-content>
+                <ion-skeleton-text [animated]="true" style="width: 90%;"></ion-skeleton-text>
+            </ion-card-content>
+        </ion-card>
+    </ng-container>
+
+</ion-content>

@@ -1,0 +1,120 @@
+<ion-header>
+    <ion-toolbar color="light">
+        <ion-buttons slot="start">
+            <ion-back-button text="" default-href="#" (click)="backButton()"></ion-back-button>
+        </ion-buttons>
+        <ion-searchbar type="text" placeholder="Búsqueda"></ion-searchbar>
+        <ion-progress-bar *ngIf="!loaded" type="indeterminate"></ion-progress-bar>
+        <ion-buttons slot="primary">
+            <ion-button [routerLink]="['/home/perfil']">
+                <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ng-container *ngIf="loaded">
+        <ion-item lines="none" [routerLink]="['/home/usuario/', usuarioModel.uid]" detail="false">
+            <ion-avatar slot="start">
+                <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+            </ion-avatar>
+            <ion-label>
+                <h2>{{usuarioModel.nombre}} {{usuarioModel.apellidos}}</h2>
+                <p>{{usuarioModel.especialidad}}</p>
+                <p>{{publicacionModel.fechaPublicacion}}</p>
+            </ion-label>
+        </ion-item>
+
+        <ion-item lines="none">
+            <h3><strong>{{publicacionModel.titulo}}</strong></h3>
+        </ion-item>
+        <ion-item lines="none">
+            <p [innerHTML]="publicacionModel.contenido"></p>
+        </ion-item>
+
+        <ng-container *ngIf="creadorPublicacion || usuarioAdmin || usuarioMod">
+            <ion-item lines="none">
+                <ion-buttons slot="end">
+                    <ion-button (click)="eliminarPublicacion()">
+                        <ion-icon slot="icon-only" color="danger" name="trash-outline"></ion-icon>
+                    </ion-button>
+                    <ion-button>
+                        <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+                    </ion-button>
+                </ion-buttons>
+            </ion-item>
+        </ng-container>
+
+        <ion-item lines="none">
+            <ion-label class="ion-text-wrap">
+                <h2>Comentarios</h2>
+            </ion-label>
+        </ion-item>
+
+
+        <div keyboard-attach class="publicarComentario ion-padding">
+            <form [formGroup]="formGroup">
+                <ion-input placeholder="Escribe un comentario" type="text" formControlName="contenido"></ion-input>
+            </form>
+            <ion-button fill="clear" [disabled]="!formGroup.valid" (click)="enviarComentario()">
+                <ion-icon slot="icon-only" name="send-outline"></ion-icon>
+            </ion-button>
+        </div>
+
+        <ion-list *ngIf="mostrarComentarios">
+            <ng-container *ngFor="let comentario of listaComentarios">
+                <ion-item lines="none" [routerLink]="['/home/usuario/', comentario.usuario]" detail="false">
+                    <ion-avatar slot="start">
+                        <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+                    </ion-avatar>
+                    <ion-label class="ion-text-wrap">
+                        <h2>{{comentario.nombre}} {{comentario.apellidos}}</h2>
+                        <p>{{comentario.fecha}}</p>
+                    </ion-label>
+                </ion-item>
+                <ion-item lines="none">
+                    <p>{{comentario.contenido}}</p>
+                </ion-item>
+            </ng-container>
+        </ion-list>
+    </ng-container>
+
+    <ng-container *ngIf="!loaded">
+        <ion-list>
+            <ion-item lines="none">
+                <ion-avatar slot="start">
+                    <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+                </ion-avatar>
+                <ion-label>
+                    <h2>
+                        <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
+                    </h2>
+                    <p>
+                        <ion-skeleton-text [animated]="true" style="width: 40%;"></ion-skeleton-text>
+                    </p>
+                    <p>
+                        <ion-skeleton-text [animated]="true" style="width: 60%;"></ion-skeleton-text>
+                    </p>
+                </ion-label>
+            </ion-item>
+
+            <ion-item lines="none">
+                <ion-skeleton-text [animated]="true" style="width: 60%;"></ion-skeleton-text>
+            </ion-item>
+            <ion-item lines="none">
+                <ion-avatar slot="start">
+                    <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+                </ion-avatar>
+                <ion-label>
+                    <h2>
+                        <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
+                    </h2>
+                    <p>
+                        <ion-skeleton-text [animated]="true" style="width: 40%;"></ion-skeleton-text>
+                    </p>
+                </ion-label>
+            </ion-item>
+        </ion-list>
+    </ng-container>
+</ion-content>

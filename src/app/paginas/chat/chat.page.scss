@@ -1,0 +1,29 @@
+.mensaje {
+    border-color: lightgray;
+    border-style: solid;
+    border-width: medium;
+    border-radius: 15px;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: 3%;
+    margin-top: 5%;
+}
+
+.bottom {
+    position: absolute;
+    display: flex;
+    bottom: 0px;
+    width: 100%;
+}
+
+.bottom form {
+    // height: fit-content;
+    width: 85%;
+    border-style: solid;
+    border-width: medium;
+    border-color: lightgray;
+}
+
+.bottom ion-button {
+    width: 15%;
+}

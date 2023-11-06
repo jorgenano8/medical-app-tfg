@@ -1,0 +1,50 @@
+<ion-content>
+    <ion-item lines="none" class="registroHeader">
+        <ion-label>
+            <h1><strong>Regístrate</strong></h1>
+            <p>o <a [routerLink]="['/login']">Inicia sesión</a></p>
+        </ion-label>
+    </ion-item>
+
+    <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="registroForm">
+        <ion-item class="ion-no-padding">
+            <ion-label position="floating">Nombre</ion-label>
+            <ion-input placeholder="Introduce tu nombre" type="text" formControlName="nombre"></ion-input>
+        </ion-item>
+        <ion-item class="ion-no-padding">
+            <ion-label position="floating">Apellidos</ion-label>
+            <ion-input placeholder="Introduce tus apellidos" type="text" formControlName="apellidos"></ion-input>
+        </ion-item>
+        <ion-item class="ion-no-padding">
+            <ion-label position="floating">DNI</ion-label>
+            <ion-input placeholder="Introduce tu número de identificación" type="text" formControlName="dni"></ion-input>
+        </ion-item>
+        <ion-item class="ion-no-padding">
+            <ion-label position="floating">Número de colegiado</ion-label>
+            <ion-input placeholder="Introduce tu número de colegiado" type="number" formControlName="colegiado"></ion-input>
+        </ion-item>
+        <ion-item class="ion-no-padding">
+            <ion-label position="floating">Correo electrónico</ion-label>
+            <ion-input placeholder="Introduce tu correo electrónico" type="email" formControlName="email"></ion-input>
+        </ion-item>
+        <ion-item class="ion-no-padding">
+            <ion-label position="floating">Contraseña</ion-label>
+            <ion-input placeholder="Introduce tu contraseña" type="password" formControlName="contraseña"></ion-input>
+        </ion-item>
+        <ion-item class="ion-no-padding">
+            <ion-label position="floating">Confirmar contraseña</ion-label>
+            <ion-input placeholder="Introduce de nuevo tu contraseña" type="password" formControlName="contraseña2"></ion-input>
+        </ion-item>
+
+        <ion-item class="ion-no-padding" lines="none">
+            <ion-label>Aviso legal y política de privacidad</ion-label>
+            <ion-checkbox slot="start" formControlName="terminos"></ion-checkbox>
+        </ion-item>
+
+        <ion-button class="buttonRegistroForm" type="submit" expand="block" [disabled]="!formGroup.valid || loading">
+            <ion-spinner *ngIf="loading"></ion-spinner>
+            <span *ngIf="!loading">Continuar</span>
+        </ion-button>
+
+    </form>
+</ion-content>

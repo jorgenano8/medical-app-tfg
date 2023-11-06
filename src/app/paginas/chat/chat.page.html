@@ -1,0 +1,36 @@
+<ion-header>
+    <ion-toolbar color="light">
+        <ion-buttons slot="start">
+            <ion-back-button text="" default-href="#"></ion-back-button>
+        </ion-buttons>
+        <ion-progress-bar *ngIf="!loaded" type="indeterminate"></ion-progress-bar>
+        <ion-buttons slot="secondary">
+            <ion-button [routerLink]="['/home/usuario/', usuarioModel.uid]">
+                <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-label [routerLink]="['/home/usuario/', usuarioModel.uid]">
+            <h2>{{usuarioModel.nombre}} {{usuarioModel.apellidos}}</h2>
+            <p>{{usuarioModel.especialidad}}</p>
+        </ion-label>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-list>
+        <ion-item class="mensaje" lines="none" *ngFor="let mensaje of listaMensajes">
+            <label>{{mensaje.contenido}}</label>
+        </ion-item>
+    </ion-list>
+
+    <div class="bottom ion-padding" keyboard-attach>
+        <form [formGroup]="formGroup">
+            <ion-input placeholder="Escribe un mensaje" type="text" formControlName="contenido"></ion-input>
+        </form>
+        <ion-button fill="clear" [disabled]="!formGroup.valid" (click)="enviarMensaje()">
+            <ion-icon slot="icon-only" name="send-outline"></ion-icon>
+        </ion-button>
+    </div>
+
+</ion-content>

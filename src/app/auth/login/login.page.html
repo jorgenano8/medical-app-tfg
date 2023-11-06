@@ -1,0 +1,26 @@
+<ion-content>
+    <ion-item lines="none" class="loginHeader">
+        <ion-label>
+            <h1><strong>Inicia sesión</strong></h1>
+            <p>o <a [routerLink]="['/registro']">Regístrate</a></p>
+        </ion-label>
+    </ion-item>
+
+    <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="loginForm">
+        <ion-item class="ion-no-padding">
+            <ion-label position="floating">Correo electrónico</ion-label>
+            <ion-input placeholder="Introduce tu correo electrónico" type="email" formControlName="email" required="true"></ion-input>
+        </ion-item>
+        <ion-item class="ion-no-padding">
+            <ion-label position="floating">Contraseña</ion-label>
+            <ion-input placeholder="Introduce tu contraseña" type="password" formControlName="contraseña" required="true"></ion-input>
+        </ion-item>
+
+        <p><a [routerLink]="['/nuevacontrasenya']">¿Has olvidado tu contraseña?</a></p>
+
+        <ion-button class="buttonLoginForm" type="submit" expand="block" [disabled]="!formGroup.valid || loading">
+            <ion-spinner *ngIf="loading"></ion-spinner>
+            <span *ngIf="!loading">Iniciar sesión</span>
+        </ion-button>
+    </form>
+</ion-content>

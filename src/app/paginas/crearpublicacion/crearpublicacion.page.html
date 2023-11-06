@@ -1,0 +1,44 @@
+<ion-header class="ion-no-border">
+    <ion-toolbar>
+        <ion-buttons slot="secondary">
+            <ion-button color="danger" fill="clear" [disabled]="loading" (click)="cancelButton()">Cancelar</ion-button>
+        </ion-buttons>
+        <ion-buttons slot="primary">
+            <ion-button type="submit" fill="solid" (click)="publicarPublicacion()" [disabled]="!formGroup.valid || loading">
+                <ion-spinner *ngIf="loading"></ion-spinner>
+                <span *ngIf="!loading">Publicar</span>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-item lines="none">
+        <ion-avatar slot="start">
+            <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+        </ion-avatar>
+        <ion-label>
+            <h2>{{usuarioModel.nombre}} {{usuarioModel.apellidos}}</h2>
+            <p>{{usuarioModel.especialidad}}</p>
+        </ion-label>
+    </ion-item>
+    <form [formGroup]="formGroup" (ngSubmit)="publicarPublicacion()" class="publicacionForm">
+        <ion-list class="listForm">
+            <ion-item class="ion-no-padding">
+                <ion-label position="floating">Título</ion-label>
+                <ion-input placeholder="Introduce un título" type="text" maxlength="70" formControlName="titulo"></ion-input>
+            </ion-item>
+            <ion-item class="ion-no-padding">
+                <ion-select aria-label="Etiqueta" interface="popover" placeholder="Etiqueta" formControlName="etiqueta">
+                    <ng-container *ngFor="let etiqueta of listaEtiquetas">
+                        <ion-select-option value="{{etiqueta}}">{{etiqueta}}</ion-select-option>
+                    </ng-container>
+                </ion-select>
+            </ion-item>
+            <ion-item lines="none" class="ion-no-padding">
+                <ion-textarea rows="10" formControlName="contenido" placeholder="¿Que te gustaría compartir?"></ion-textarea>
+            </ion-item>
+        </ion-list>
+    </form>
+
+</ion-content>

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">medical-app-tfg</string>
+    <string name="title_activity_main">medical-app-tfg</string>
+    <string name="package_name">medical.app.tfg</string>
+    <string name="custom_url_scheme">medical.app.tfg</string>
+</resources>
